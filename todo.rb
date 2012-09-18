@@ -12,19 +12,8 @@ Dir["commands/*.rb"].each {|file| require file }
 
 repository = Repository.new(File.join('.', 'bugs'))
 
-command = ARGV.shift
-case command
-	when 'add'
-		AddCommand.new(repository).run ARGV do |s|
-			puts s
-		end
-	when 'list'
-		ListCommand.new(repository).run ARGV do |s|
-			puts s
-		end
-	else
-		puts "Unknown command #{command}"
-		exit 1
-	end
-
-exit 0
+commandname = ARGV.shift
+command = Meta::command_from_name(commandname, repository)
+command.run ARGV do |s|
+	puts s
+end
