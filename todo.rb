@@ -14,6 +14,12 @@ repository = Repository.new(File.join('.', 'bugs'))
 
 commandname = ARGV.shift
 command = Meta::command_from_name(commandname, repository)
-command.run ARGV do |s|
-	puts s
+if command != nil
+	command.run ARGV do |s| 
+		puts s
+	end 
+	exit 0
+else
+	puts "Unknown command #{commandname}"
+	exit 1
 end

@@ -7,6 +7,11 @@ module Meta
 	end
 
 	def Meta.command_from_name(commandname, repository)
-		Object.const_get(commandname.capitalize + 'Command').new repository
+		begin
+			klass = Object.const_get(commandname.capitalize + 'Command')
+			klass.new repository
+		rescue NameError
+			nil
+		end
 	end
 end

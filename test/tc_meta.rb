@@ -28,4 +28,10 @@ class TestMeta < Test::Unit::TestCase
 		
 		assert_equal('AddCommand', command.class.name)
 	end
+
+	def test_returns_nil_when_command_class_not_found
+		command = Meta::command_from_name('xxxxxx', nil)
+
+		assert_equal(nil, command)
+	end
 end
