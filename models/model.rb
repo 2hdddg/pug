@@ -12,4 +12,9 @@ class Model
 	def set(name, value)
 		instance_variable_set '@' + name, value
 	end
+
+	def validate(missing_field_callback)
+		@title = missing_field_callback.call('title', 'Title', '') if @title == ''
+		@status = missing_field_callback.call('status', 'Status', '') if @status == ''
+	end
 end

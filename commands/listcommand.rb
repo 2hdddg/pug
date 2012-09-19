@@ -4,7 +4,7 @@ class ListCommand
 		@repository = repository
 	end
 
-	def run(parameters)
+	def run(parameters, input_callback)
 		@repository.all do |f, m| 
 			yield "#{m.title} [#{f}]" 
 		end

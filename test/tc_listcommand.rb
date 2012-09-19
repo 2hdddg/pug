@@ -16,9 +16,10 @@ class TestListCommand < Test::Unit::TestCase
 
 	def test_run_should_yield_title_of_all_bugs
 		fake = FakeRepository.new
+		input_callback = lambda {|name, desc, default| default }
 		bugs = []
 		command = ListCommand.new(fake)
-		command.run [] do |f|
+		command.run [], input_callback do |f|
 			bugs.push(f)
 		end
 

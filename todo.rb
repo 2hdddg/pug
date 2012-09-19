@@ -11,11 +11,17 @@ Dir["commands/*.rb"].each {|file| require file }
 # todo report full > report.yml
 
 repository = Repository.new(File.join('.', 'bugs'))
+input_callback = lambda do |field, description, default|
+	puts "#{description}"
+	input = gets.chomp
+	input = default if input == ''
+	input
+end
 
 commandname = ARGV.shift
 command = Meta::command_from_name(commandname, repository)
 if command != nil
-	command.run ARGV do |s| 
+	command.run ARGV, input_callback do |s| 
 		puts s
 	end 
 	exit 0

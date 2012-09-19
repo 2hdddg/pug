@@ -19,10 +19,22 @@ class TestAddCommand < Test::Unit::TestCase
 
 	def test_run_should_add_bug_to_repository
 		fake = FakeRepository.new
+		input_callback = lambda {|name, desc, default| default }
 		command = AddCommand.new(fake)
-		command.run ["Bug", "--title=\"A new bug\""]
+		command.run ["Bug", "--title=\"A new bug\""], input_callback
 
 		assert_equal(1, fake.added.length)
 		assert_equal('A new bug', fake.added[0].title)
+	end
+
+	def test_run_should_use_input_callback
+		fake = FakeRepository.new
+		command = AddCommand.new(fake)
+		called = false
+		input_callback = lambda {|name, desc, default| called = true }
+		# missing required field: title
+		command.run ["Bug"], input_callback
+
+		assert_equal(true, called)
 	end
 end
