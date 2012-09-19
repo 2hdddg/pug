@@ -4,6 +4,9 @@ $:.unshift(File.expand_path('../../', __FILE__))
 require 'commands/addcommand'
 
 class TestAddCommand < Test::Unit::TestCase
+	def setup
+		@output_callback = lambda {|o| nil}
+	end
 	
 	class FakeRepository
 		attr_reader :added
@@ -21,7 +24,7 @@ class TestAddCommand < Test::Unit::TestCase
 		fake = FakeRepository.new
 		input_callback = lambda {|name, desc, default| default }
 		command = AddCommand.new(fake)
-		command.run ["Bug", "--title=\"A new bug\""], input_callback
+		command.run ["Bug", "--title=\"A new bug\""], input_callback, @output_callback
 
 		assert_equal(1, fake.added.length)
 		assert_equal('A new bug', fake.added[0].title)
@@ -33,7 +36,7 @@ class TestAddCommand < Test::Unit::TestCase
 		called = false
 		input_callback = lambda {|name, desc, default| called = true }
 		# missing required field: title
-		command.run ["Bug"], input_callback
+		command.run ["Bug"], input_callback, @output_callback
 
 		assert_equal(true, called)
 	end

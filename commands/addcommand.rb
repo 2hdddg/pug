@@ -7,7 +7,7 @@ class AddCommand
 		@repository = repository
 	end
 
-	def run(parameters, input_callback)
+	def run(parameters, input_callback, output_callback)
 		classname = parameters.shift
 		model = Meta::model_from_classname(classname)
 

@@ -17,13 +17,14 @@ input_callback = lambda do |field, description, default|
 	input = default if input == ''
 	input
 end
+output_callback = lambda do |o|
+	puts o.to_s
+end
 
 commandname = ARGV.shift
 command = Meta::command_from_name(commandname, repository)
 if command != nil
-	command.run ARGV, input_callback do |s| 
-		puts s
-	end 
+	command.run ARGV, input_callback, output_callback 
 	exit 0
 else
 	puts "Unknown command #{commandname}"
