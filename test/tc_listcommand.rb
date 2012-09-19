@@ -14,14 +14,13 @@ class TestListCommand < Test::Unit::TestCase
 		end
 	end
 
-	def test_run_should_yield_title_of_all_bugs
+	def test_run_should_output_title_of_all_bugs
 		fake = FakeRepository.new
 		input_callback = lambda {|name, desc, default| default }
+		output_callback = lambda {|o| bugs.push}
 		bugs = []
 		command = ListCommand.new(fake)
-		command.run [], input_callback do |f|
-			bugs.push(f)
-		end
+		command.run [], input_callback
 
 		assert_equal(1, bugs.length)
 		assert_equal('A bug', bugs[0].slice(0, 5))
