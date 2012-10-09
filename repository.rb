@@ -11,11 +11,9 @@ class Repository
 	end
 
 	def get_path_and_filename(model)
-		filename = 
-			Format::compact_datetime(DateTime.now) +
-			'_' +
-			Format::safe_for_filename(model.title) +
-			'.yml'
+		nowpart = Format::compact_datetime(DateTime.now)
+		titlepart = Format::safe_for_filename(model.title)
+		filename = "#{titlepart}_#{nowpart}.yml"
 		File.join(@path, filename)
 	end
 
@@ -37,5 +35,13 @@ class Repository
 		d = YAML::load(file)
 		file.close
 		d		
+	end
+
+	def set(model, filename)
+		content = model.to_yaml
+		path_and_filename = filename #File.join(@path, filename)
+		file = File.new(path_and_filename, 'w')
+		file.write(content)
+		file.close
 	end
 end

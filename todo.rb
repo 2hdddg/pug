@@ -5,6 +5,7 @@ Dir["commands/*.rb"].each {|file| require file }
 
 # todo add bug --title="A new bug"
 # todo list
+# todo comment 1111_a_new_bug.yml 
 # todo get 1111_a_new_bug.yml
 # todo set 1111_a_new_bug.yml --status="Started"
 # todo report diff ../old/ > report.yml
@@ -12,7 +13,7 @@ Dir["commands/*.rb"].each {|file| require file }
 
 repository = Repository.new(File.join('.', 'bugs'))
 input_callback = lambda do |field, description, default|
-	puts "#{description}"
+	puts description
 	input = gets.chomp
 	input = default if input == ''
 	input
