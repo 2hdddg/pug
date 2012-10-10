@@ -48,4 +48,7 @@ class TestRepository < Test::Unit::TestCase
 		assert_equal('A new bug', bug.title)			
 	end
 
+	def test_set_should_persist_changes()
+	end
+
 end
