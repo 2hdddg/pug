@@ -33,6 +33,7 @@ class AbstractModel
 	end
 end
 
+# Base class for models that will be persisted as roots
 class Model < AbstractModel
 	attr_accessor :title, :comments
 

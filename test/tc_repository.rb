@@ -21,7 +21,7 @@ class TestRepository < Test::Unit::TestCase
 		FileUtils.rm_rf(path_to_test_directory)
 	end
 
-	def test_add_should_persist_bug()
+	def test_add_should_persist_model
 		repository = Repository.new(path_to_test_directory)
 		bug = Bug.new
 		bug.title = 'A new bug'
@@ -34,13 +34,27 @@ class TestRepository < Test::Unit::TestCase
 		assert_equal('A new bug', all[0].title)	
 	end
 
-	def test_get_should_retrive_bug
+	def test_all_should_yield_filename_and_model
+		repository = Repository.new(path_to_test_directory)
+		bug1 = Bug.new
+		bug1.title = 'A new bug'
+		bug2 = Bug.new
+		bug2.title = 'Another bug'
+		filename1 = repository.add(bug1)
+		filename2 = repository.add(bug2)
+
+		all = repository.all { |f, m| {:f => f, :m => m}}
+
+		assert_equal(2, all.length)
+		assert(all.any? {|x| x[:f] == filename1 } )
+		assert(all.any? {|x| x[:m].title == bug2.title } )
+	end
+
+	def test_get_should_retrive_model
 		repository = Repository.new(path_to_test_directory)
 		bug = Bug.new
 		bug.title = 'A new bug'
-		repository.add(bug)
-		filenames = repository.all { |f, d|  f } 
-		filename = filenames[0]
+		filename = repository.add(bug)
 
 		bug = repository.get(filename)
 		
@@ -48,7 +62,17 @@ class TestRepository < Test::Unit::TestCase
 		assert_equal('A new bug', bug.title)			
 	end
 
-	def test_set_should_persist_changes()
-	end
+	def test_set_should_persist_changes
+		repository = Repository.new(path_to_test_directory)
+		bug = Bug.new
+		bug.title = 'A new bug'
+		filename = repository.add(bug)
+		bug = repository.get(filename)
+		bug.status = 'weird'
+	
+		repository.set(bug, filename)
 
+		bug = repository.get(filename)
+		assert_equal('weird', bug.status)	
+	end
 end
