@@ -10,7 +10,7 @@ class Bug < Model
 		@status = ''
 	end
 
-	def get_fields
+	def get_prompt_fields
 		super() << PromptField.new('status', "Please enter initial status")
 	end
 end

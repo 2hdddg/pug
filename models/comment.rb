@@ -7,7 +7,7 @@ class Comment < AbstractModel
 		@text = ''
 	end
 
-	def get_fields
+	def get_prompt_fields
 		[PromptField.new('text', 'Please enter your comment')]
 	end
 end

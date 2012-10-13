@@ -18,7 +18,9 @@ class AddCommand
 			model.set nv[:name], nv[:value]
 		end
 
-		model.validate input_callback
+		# let the model prompt for fields that is 
+		# missing
+		model.prompt input_callback
 
 		@repository.add(model)
 	end

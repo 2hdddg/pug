@@ -19,7 +19,7 @@ class CommentCommand
 			model.set nv[:name], nv[:value]
 		end
 
-		model.validate input_callback
+		model.prompt input_callback
 
 		modelToCommentOn.add_comment model
 		@repository.set(modelToCommentOn, filename)

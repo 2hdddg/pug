@@ -12,7 +12,7 @@ Dir["commands/*.rb"].each {|file| require file }
 # todo report full > report.yml
 
 repository = Repository.new(File.join('.', 'bugs'))
-input_callback = lambda do |field, description, default|
+prompt_callback = lambda do |field, description, default|
 	puts description
 	input = gets.chomp
 	input = default if input == ''
@@ -25,7 +25,7 @@ end
 commandname = ARGV.shift
 command = Meta::command_from_name(commandname, repository)
 if command != nil
-	command.run ARGV, input_callback, output_callback 
+	command.run ARGV, prompt_callback, output_callback 
 	exit 0
 else
 	puts "Unknown command #{commandname}"

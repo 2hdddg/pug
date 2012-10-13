@@ -1,14 +1,5 @@
 $:.unshift(File.dirname(__FILE__))
 
-class PromptField
-	attr_accessor :name, :prompt
-
-	def initialize(name, prompt)
-		@name = name
-		@prompt = prompt
-	end
-end
-
 class AbstractModel
 	def set(name, value)
 		instance_variable_set '@' + name, value
@@ -18,16 +9,16 @@ class AbstractModel
 		instance_variable_get '@' + name
 	end
 
-	def get_fields
+	def get_prompt_fields
 		[]
 	end
 
-	def validate(missing_field_callback)
-		fields = get_fields()
+	def prompt(prompt_callback)
+		fields = get_prompt_fields()
 		fields.each do |f|
 			value = get(f.name)
 			if value == ''
-				set(f.name, missing_field_callback.call(f.name, f.prompt, ''))
+				set(f.name, prompt_callback.call(f.name, f.prompt, ''))
 			end
 		end
 	end
@@ -42,7 +33,7 @@ class Model < AbstractModel
 		@comments = []
 	end
 
-	def get_fields
+	def get_prompt_fields
 		[PromptField.new('title', 'Please enter title')]
 	end
 
