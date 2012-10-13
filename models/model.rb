@@ -18,7 +18,9 @@ class AbstractModel
 		fields.each do |f|
 			value = get(f.name)
 			if value == ''
-				set(f.name, prompt_callback.call(f.name, f.prompt, ''))
+				prompted = prompt_callback.call(f.name, f.prompt, f.default)
+				expanded = f.expand(prompted)
+				set(f.name, expanded)
 			end
 		end
 	end

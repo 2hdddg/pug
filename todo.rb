@@ -12,8 +12,8 @@ Dir["commands/*.rb"].each {|file| require file }
 # todo report full > report.yml
 
 repository = Repository.new(File.join('.', 'bugs'))
-prompt_callback = lambda do |field, description, default|
-	puts description
+prompt_callback = lambda do |field, prompt, default|
+	puts prompt
 	input = gets.chomp
 	input = default if input == ''
 	input

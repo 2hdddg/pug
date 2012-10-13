@@ -15,5 +15,29 @@ class TestBug < Test::Unit::TestCase
 
 		assert_equal(true, prompted_for_status)
 	end
+
+	def test_prompt_should_support_shortcut_for_status_field
+		prompt_callback = lambda do |field, description, default|
+			if field == 'status'
+				return 'R'
+			end
+		end 
+		model = Bug.new
+		model.prompt prompt_callback
+
+		assert_equal 'Reported', model.status
+	end
+
+	def test_prompt_should_use_default_when_prompt_returns_empty_string
+		prompt_callback = lambda do |field, description, default|
+			if field == 'status'
+				return ''
+			end
+		end 
+		model = Bug.new
+		model.prompt prompt_callback
+
+		assert_equal 'Reported', model.status
+	end
 end
 	
