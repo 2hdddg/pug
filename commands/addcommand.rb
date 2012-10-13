@@ -7,20 +7,19 @@ class AddCommand
 		@repository = repository
 	end
 
-	def run(parameters, input_callback, output_callback)
-		classname = parameters.shift
+	def run(invoke)
+		classname = invoke[:argv].shift
 		model = Meta::model_from_classname(classname)
 
 		# set fields on model from parameters
-		while parameters.length > 0
-			option = parameters.shift
+		while invoke[:argv].length > 0
+			option = invoke[:argv].shift
 			nv =  Parse.option_to_name_and_value(option)
 			model.set nv[:name], nv[:value]
 		end
 
-		# let the model prompt for fields that is 
-		# missing
-		model.prompt input_callback
+		# let the model prompt for additional fields 
+		model.prompt invoke[:prompt]
 
 		@repository.add(model)
 	end

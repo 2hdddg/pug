@@ -23,9 +23,16 @@ output_callback = lambda do |o|
 end
 
 commandname = ARGV.shift
+invoke = {
+	:argv   => ARGV,
+	:prompt => prompt_callback,
+	:output => output_callback,
+}
+
+
 command = Meta::command_from_name(commandname, repository)
 if command != nil
-	command.run ARGV, prompt_callback, output_callback 
+	command.run invoke 
 	exit 0
 else
 	puts "Unknown command #{commandname}"
