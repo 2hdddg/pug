@@ -12,7 +12,7 @@ class PromptField
 
 	def expand(value)
 		if @options != nil
-			matched = @options.select {|o| o[:short].downcase == value }
+			matched = @options.select {|o| o[:short].downcase == value.to_s.downcase }
 			if matched.count > 0
 				matched[0][:long]
 			else
