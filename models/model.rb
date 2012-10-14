@@ -34,12 +34,6 @@ class AbstractModel
 		end
 	end
 
-	def get_diffs(oldmodel)
-		diffs = []
-		diffs << Diff.new('title', @title) if oldmodel.title != @title
-		diffs
-	end
-
 end
 
 # Base class for models that will be persisted as roots
@@ -63,5 +57,11 @@ class Model < AbstractModel
 		@comments = [] if @comments == nil
 		@comments << comment
 	end	
+
+	def get_diffs(oldmodel)
+		diffs = []
+		diffs << Diff.new('title', @title) if oldmodel.title != @title
+	end
+
 end
 
