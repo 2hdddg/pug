@@ -39,6 +39,10 @@ class Model < AbstractModel
 		[PromptField.new('title', 'Please enter title')]
 	end
 
+	def get_summary_fields
+		[{:name => "Title", :value => @title}]
+	end
+
 	def add_comment(comment)
 		@comments = [] if @comments == nil
 		@comments << comment

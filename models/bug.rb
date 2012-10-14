@@ -10,6 +10,11 @@ class Bug < Model
 		@status = ''
 	end
 
+	def get_summary_fields
+		super <<
+			{:name => "Status", :value => @status}
+	end
+
 	def get_prompt_fields
 		super() << 
 			PromptField.new('status', "Please enter initial status", 'Reported', [

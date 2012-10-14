@@ -27,7 +27,7 @@ class TestListCommand < Test::Unit::TestCase
 		command.run invoke
 
 		assert_equal(1, bugs.length)
-		assert_equal('A bug', bugs[0].slice(0, 5))
+		assert(bugs[0].include?('A bug'))
 	end
 
 end
