@@ -30,6 +30,18 @@ class TestModel < Test::Unit::TestCase
 
 		assert_equal('a new value', model.title)
 	end
+
+	def test_get_diff_should_return_difference_between_two_models
+		model1 = Model.new
+		model1.title = "First model"
+		model2 = Model.new
+		model2.title = "Second model"
+
+		diff = model2.get_diff(model1)
+
+		assert_equal('title', diff.modifications[0].field)
+		assert_equal('Second model', diff.modifications[0].newvalue)
+	end
 end
 
 

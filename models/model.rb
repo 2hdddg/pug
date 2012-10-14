@@ -1,5 +1,22 @@
 $:.unshift(File.dirname(__FILE__))
 
+class Modification
+	attr_accessor :field, :newvalue
+
+	def initialize(field, newvalue)
+		@field = field
+		@newvalue = newvalue
+	end
+end
+
+class Diff
+	attr_accessor :modifications
+
+	def initialize
+		@modifications = []
+	end
+end
+
 class AbstractModel
 	def set(name, value)
 		instance_variable_set '@' + name, value
@@ -24,6 +41,13 @@ class AbstractModel
 			end
 		end
 	end
+
+	def get_diff(oldmodel)
+		diff = Diff.new
+		diff.modifications << Modification.new('title', @title) if oldmodel.title != @title
+		diff
+	end
+
 end
 
 # Base class for models that will be persisted as roots
