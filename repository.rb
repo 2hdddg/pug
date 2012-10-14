@@ -6,6 +6,8 @@ require "format"
 Dir["models/*.rb"].each {|file| require file }
 
 class Repository
+	attr_reader :path
+
 	def initialize(path)
 		@path = path
 	end
