@@ -1,19 +1,11 @@
 $:.unshift(File.dirname(__FILE__))
 
-class Modification
+class Diff
 	attr_accessor :field, :newvalue
 
 	def initialize(field, newvalue)
 		@field = field
 		@newvalue = newvalue
-	end
-end
-
-class Diff
-	attr_accessor :modifications
-
-	def initialize
-		@modifications = []
 	end
 end
 
@@ -42,10 +34,10 @@ class AbstractModel
 		end
 	end
 
-	def get_diff(oldmodel)
-		diff = Diff.new
-		diff.modifications << Modification.new('title', @title) if oldmodel.title != @title
-		diff
+	def get_diffs(oldmodel)
+		diffs = []
+		diffs << Diff.new('title', @title) if oldmodel.title != @title
+		diffs
 	end
 
 end
