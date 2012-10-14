@@ -34,6 +34,7 @@ class Repository
 	end
 
 	def get(filename)
+		filename = File.join(@path, filename) if not filename.include?(@path)
 		file = File.open(filename)
 		d = YAML::load(file)
 		file.close

@@ -16,6 +16,10 @@ class Added
 		@className = instance.class.to_s
 		@instance = instance
 	end
+
+	def to_s
+		"Added #{@className} #{@instance.title}"
+	end
 end
 
 class AbstractModel
