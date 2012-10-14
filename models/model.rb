@@ -1,11 +1,20 @@
 $:.unshift(File.dirname(__FILE__))
 
-class Diff
+class Modified
 	attr_accessor :field, :newvalue
 
 	def initialize(field, newvalue)
 		@field = field
 		@newvalue = newvalue
+	end
+end
+
+class Added
+	attr_accessor :className, :instance
+
+	def initialize(instance)
+		@className = instance.class.to_s
+		@instance = instance
 	end
 end
 
@@ -60,7 +69,14 @@ class Model < AbstractModel
 
 	def get_diffs(oldmodel)
 		diffs = []
-		diffs << Diff.new('title', @title) if oldmodel.title != @title
+		diffs << Modified.new('title', @title) if oldmodel.title != @title
+
+		# Only report new comments
+		if @comments.length > oldmodel.comments.length
+			new_comments = @comments[oldmodel.comments.length..@comments.length]
+			new_comments.each {|c| diffs << Added.new(c) }
+		end
+		diffs
 	end
 
 end

@@ -42,6 +42,27 @@ class TestModel < Test::Unit::TestCase
 		assert_equal('title', diffs[0].field)
 		assert_equal('Second model', diffs[0].newvalue)
 	end
+
+	def test_get_diffs_when_identical_should_return_empty_array
+		model1 = Model.new
+		model1.title = "First model"
+		model2 = Model.new
+		model2.title = "First model"
+
+		diffs = model2.get_diffs(model1)
+
+		assert_equal(0, diffs.length)
+	end
+
+	def test_get_diffs_should_report_new_comment
+		model1 = Model.new
+		model2 = Model.new
+		model2.add_comment(Comment.new)
+
+		diffs = model2.get_diffs(model1)
+
+		assert_equal('Comment', diffs[0].className)	
+	end
 end
 
 

@@ -26,4 +26,10 @@ class Bug < Model
 				{ :long => 'Rejected',  :short => 'X' }
 			])
 	end
+
+	def get_diffs(oldmodel)
+		diffs = super
+		diffs << Modified.new('status', @status) if oldmodel.status != @status
+		diffs	
+	end
 end

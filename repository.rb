@@ -23,7 +23,6 @@ class Repository
 		file = File.new(path_and_filename, 'w')
 		file.write(content)
 		file.close
-		# return filename
 		path_and_filename
 	end
 
