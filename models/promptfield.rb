@@ -1,11 +1,11 @@
 $:.unshift(File.dirname(__FILE__))
 
 class PromptField
-	attr_accessor :name, :prompt, :default, :options
+	attr_accessor :name, :prompttext, :default, :options
 
-	def initialize(name, prompt, default = nil, options = nil)
+	def initialize(name, prompttext, default = nil, options = nil)
 		@name = name
-		@prompt = prompt
+		@prompttext = prompttext
 		@default = default || ''
 		@options = options
 	end
@@ -15,10 +15,22 @@ class PromptField
 			matched = @options.select {|o| o[:short] == value }
 			if matched.count > 0
 				matched[0][:long]
+			else
+				default
 			end
-			default
 		else
 			value
 		end
+	end
+
+	def options_prompt_texts
+		@options.map {|o| "#{o[:long]}(#{o[:short]})"}
+	end
+
+	def prompt
+		p = @prompttext
+		p = p + " ('#{@default}' is default)" if @default != nil and @default != ''
+		p = p + "\n One of " + options_prompt_texts.join(', 	') if @options != nil
+		p
 	end
 end
