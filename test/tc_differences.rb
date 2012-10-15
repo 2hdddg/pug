@@ -54,4 +54,17 @@ class TestDifferences < Test::Unit::TestCase
 		assert_equal('Modified', differences[0].class.to_s)		
 	end
 
+	def test_should_detect_deleted_model()
+		filedifferences = { :only_in_first =>  [], :in_both => [], :only_in_second => ['x'] }
+		fake1 = FakeRepository.new	
+		fake1.to_get = Bug.new
+		fake2 = FakeRepository.new
+		fake2.to_get = Bug.new
+		fake2.to_get.status = 'it has been deleted'
+
+		differences = Differences::get(filedifferences, fake1, fake2)
+
+		assert_equal('Deleted', differences[0].class.to_s)		
+	end		
+
 end

@@ -1,4 +1,6 @@
 
+require "models/diffs"
+
 module Differences
 
 	def self.get(filedifferences, first_repository, second_repository)
@@ -20,6 +22,11 @@ module Differences
 		}.each { |d| 
 			differences << d 
 		}
+
+		# deleted models
+		deleted = filedifferences[:only_in_second]
+		deleted_models = deleted.map {|f| second_repository.get(f) }
+		deleted_models.each {|m| differences << Deleted.new(m) }
 
 		differences
 	end
