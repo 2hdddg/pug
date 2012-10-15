@@ -29,7 +29,7 @@ class Bug < Model
 
 	def get_diffs(oldmodel)
 		diffs = super
-		diffs << Modified.new('status', @status) if oldmodel.status != @status
+		diffs << Modification.new('status', @status) if oldmodel.status != @status
 		diffs	
 	end
 end

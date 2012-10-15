@@ -1,13 +1,13 @@
 
-module DirCompare
-	def DirCompare.get_filenames(path)
+module Filedifferences
+	def self.get_filenames(path)
 		Dir.glob(File.join(path, '*.yml')).map {|f| File.basename(f)}
 	end
 
-	def DirCompare.compare(first_path, second_path)
+	def self.get(first_path, second_path)
 
-		first_files = DirCompare::get_filenames(first_path)
-		second_files = DirCompare::get_filenames(second_path)
+		first_files = self::get_filenames(first_path)
+		second_files = self::get_filenames(second_path)
 
 		{ 
 			:in_both => first_files & second_files,

@@ -2,7 +2,7 @@
 
 $:.unshift(File.dirname(__FILE__))
 require "repository"
-require "dircompare"
+require "filedifferences"
 Dir["commands/*.rb"].each {|file| require file }
 
 # todo add bug --title="A new bug"
@@ -24,16 +24,12 @@ end
 output_callback = lambda do |o|
 	puts o.to_s
 end
-dircompare_callback = lambda do |newer, older|
-	DirCompare::compare(newer, older)
-end
 
 commandname = ARGV.shift
 invoke = {
 	:argv   => ARGV,
 	:prompt => prompt_callback,
 	:output => output_callback,
-	:dircompare => dircompare_callback
 }
 
 
