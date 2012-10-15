@@ -27,9 +27,32 @@ class Bug < Model
 			])
 	end
 
+	def closed?
+		@status == 'Closed'
+	end
+
+	def rejected?
+		@status == 'Rejected'
+	end
+
+	def open?
+		!closed? && !rejected?
+	end
+
 	def get_diffs(oldmodel)
 		diffs = super
 		diffs << Modification.new('status', @status) if oldmodel.status != @status
 		diffs	
+	end
+
+	def get_diff(oldmodel)
+		# from open to closed
+		if oldmodel.open? && closed?
+			Closed.new(self)
+		elsif oldmodel.open? && rejected?
+			Rejected.new(self)	
+		else
+			super
+		end
 	end
 end

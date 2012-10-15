@@ -63,5 +63,27 @@ class TestBug < Test::Unit::TestCase
 
 		assert_equal 'Reported', model.status
 	end
+
+	def test_get_diff_when_going_from_open_to_closed_should_return_closed_diff
+		open = Bug.new
+		open.status = 'Reported'
+		closed = Bug.new
+		closed.status = 'Closed'
+
+		diff = closed.get_diff(open)
+
+		assert_equal('Closed', diff.class.to_s)
+	end
+
+	def test_get_diff_when_going_from_open_to_rejected_should_return_rejected_diff
+		open = Bug.new
+		open.status = 'Reported'
+		rejected = Bug.new
+		rejected.status = 'Rejected'
+
+		diff = rejected.get_diff(open)
+
+		assert_equal('Rejected', diff.class.to_s)
+	end
 end
 	

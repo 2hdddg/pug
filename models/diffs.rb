@@ -54,6 +54,32 @@ class Modified
 	end
 end
 
+class Closed
+	attr_accessor :instance
+
+	def initialize(instance)
+		@instance = instance
+	end
+
+	def to_s
+		classname = @instance.class.to_s
+		"#{classname} '#{instance.title}' has been closed"		
+	end
+end
+
+class Rejected
+	attr_accessor :instance
+
+	def initialize(instance)
+		@instance = instance
+	end
+
+	def to_s
+		classname = @instance.class.to_s
+		"#{classname} '#{instance.title}' has been rejected"		
+	end
+end
+
 class Deleted
 	attr_accessor :instance
 
