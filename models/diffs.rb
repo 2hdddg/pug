@@ -7,32 +7,50 @@ class Modification
 		@field = field
 		@newvalue = newvalue
 	end
+
+	def to_s
+		field = @field.capitalize
+		"#{field} set to #{@newvalue}"
+	end
 end
 
 class Added
-	attr_accessor :className, :instance
+	attr_accessor :instance
 
 	def initialize(instance)
-		@className = instance.class.to_s
 		@instance = instance
 	end
 
 	def to_s
-		"Added #{@className} #{@instance.title}"
+		classname = @instance.class.to_s.downcase 
+		"New #{classname} '#{@instance.title}' reported"
+	end
+end
+
+class NewComment
+	attr_accessor :instance
+
+	def initialize(instance)
+		@instance = instance
+	end
+
+	def to_s
+		"New comment with text '#{instance.text}'"
 	end
 end
 
 class Modified
-	attr_accessor :className, :instance, :modifications
+	attr_accessor :instance, :modifications
 
 	def initialize(instance, modifications)
-		@className = instance.class.to_s
 		@instance = instance
 		@modifications = modifications
 	end
 
 	def to_s
-		"Modified #{@className} #{@instance.title}"
+		classname = @instance.class.to_s
+		modifications = @modifications.join("\n\t") 
+		"#{classname} '#{@instance.title}' was modified\n\t#{modifications}"
 	end
 end
 
@@ -43,11 +61,8 @@ class Deleted
 		@instance = instance
 	end
 
-	def className
-		@instance.class.to_s
-	end
-
 	def to_s
-		"Deleted #{@className} #{@instance.title}"
+		classname = @instance.class.to_s 
+		"#{classname} '#{@instance.title}' has been deleted"
 	end
 end 

@@ -55,9 +55,11 @@ class Model < AbstractModel
 		modifications << Modification.new('title', @title) if oldmodel.title != @title
 
 		# Only report new comments
-		if @comments && @comments.length > oldmodel.comments.length
+		if @comments && oldmodel.comments && @comments.length > oldmodel.comments.length
 			new_comments = @comments[oldmodel.comments.length..@comments.length]
-			new_comments.each {|c| modifications << Added.new(c) }
+			new_comments.each {|c| modifications << NewComment.new(c) }
+		elsif @comments && !oldmodel.comments
+			@comments.each {|c| modifications << NewComment.new(c)}
 		end
 
 		modifications

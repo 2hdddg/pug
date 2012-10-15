@@ -61,7 +61,18 @@ class TestModel < Test::Unit::TestCase
 
 		diffs = model2.get_diffs(model1)
 
-		assert_equal('Comment', diffs[0].className)	
+		assert_equal('Comment', diffs[0].instance.class.to_s)	
+	end
+
+	def test_get_diffs_should_report_new_comment_when_comments_is_null_in_second_model
+		model1 = Model.new
+		model2 = Model.new
+		model2.add_comment(Comment.new)
+		model1.comments = nil
+
+		diffs = model2.get_diffs(model1)
+
+		assert_equal('Comment', diffs[0].instance.class.to_s)	
 	end
 end
 
