@@ -5,6 +5,7 @@ File.expand_path('../', __FILE__)
 
 require "configuration"
 require "models/userconfiguration"
+require "models/globalconfiguration"
 
 class TestConfiguration < Test::Unit::TestCase
 	def path_to_test_directory
@@ -39,5 +40,24 @@ class TestConfiguration < Test::Unit::TestCase
 		persisted = another_configuration.get_userconfiguration
 
 		assert_equal(persisted.signature, userconfiguration.signature)
+	end
+
+	def test_can_report_globalconfiguration_is_missing()
+		configuration = Configuration.new(path_to_test_directory)
+
+		assert_equal(false, configuration.has_globalconfiguration?)
+	end
+
+	def test_can_persist_globalconfiguration()
+		configuration = Configuration.new(path_to_test_directory)
+		globalconfiguration = GlobalConfiguration.new()
+		globalconfiguration.repository_dir = 'xxx'
+
+		configuration.set_globalconfiguration(globalconfiguration)
+
+		another_configuration = Configuration.new(path_to_test_directory)
+		persisted = another_configuration.get_globalconfiguration
+
+		assert_equal(persisted.repository_dir, globalconfiguration.repository_dir)
 	end
 end

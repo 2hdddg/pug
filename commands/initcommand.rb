@@ -8,7 +8,10 @@ class InitCommand
 	def run(invoke)
 		userconfiguration = UserConfiguration.new
 		userconfiguration.prompt invoke[:prompt]
-
 		@configuration.set_userconfiguration(userconfiguration)
+
+		globalconfiguration = GlobalConfiguration.new
+		globalconfiguration.prompt invoke[:prompt]
+		@configuration.set_globalconfiguration(globalconfiguration)
 	end
 end
