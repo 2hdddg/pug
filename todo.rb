@@ -2,10 +2,10 @@
 
 $:.unshift(File.dirname(__FILE__))
 require "repository"
+require "configurationrepository"
 require "filedifferences"
 Dir["commands/*.rb"].each {|file| require file }
 
-# todo init
 # todo add bug --title="A new bug"
 # todo list --where=status:Open,class:Bug --groupby=status --select=title,filename --format=pretty
 # todo comment 1111_a_new_bug.yml 
@@ -13,12 +13,9 @@ Dir["commands/*.rb"].each {|file| require file }
 # todo set 1111_a_new_bug.yml --status="Started"
 # todo diff ../old/
 
-# path to directory should be read from .todo_global.yml
-repository = Repository.new(File.join('.', 'bugs'))
-
 prompt_callback = lambda do |field, prompt, default|
 	puts prompt
-	input = gets.chomp
+	input = $stdin.gets.chomp
 	input = default if input == ''
 	input
 end
@@ -33,6 +30,16 @@ invoke = {
 	:output => output_callback,
 }
 
+# make sure that we are configured
+configuration = ConfigurationRepository.new('.')
+if commandname == 'init' || !configuration.has_userconfiguration?
+	puts "There is no configuration available, please provide me with some info..." if commandname != "init"
+	InitCommand.new(configuration).run invoke
+	exit 0 if commandname == 'init'
+end
+
+# path to directory should be read from .todo_global
+repository = Repository.new(File.join('.', 'bugs'))
 
 command = Meta::command_from_name(commandname, repository)
 if command != nil

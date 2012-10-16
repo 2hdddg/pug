@@ -24,3 +24,16 @@ class AddCommand
 		@repository.add(model)
 	end
 end
+
+class InitCommand
+	def initialize(configuration)
+		@configuration = configuration
+	end
+
+	def run(invoke)
+		userconfiguration = UserConfiguration.new
+		userconfiguration.prompt invoke[:prompt]
+
+		@configuration.set_userconfiguration(userconfiguration)
+	end
+end
