@@ -11,7 +11,7 @@ Dir["commands/*.rb"].each {|file| require file }
 # todo comment 1111_a_new_bug.yml 
 # todo get 1111_a_new_bug.yml
 # todo set 1111_a_new_bug.yml --status="Started"
-# todo diff ../old/
+# todo diff ../old/ --groupby=difftype
 
 prompt_callback = lambda do |field, prompt, default|
 	puts prompt
