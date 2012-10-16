@@ -8,6 +8,7 @@ class Modification
 		@newvalue = newvalue
 	end
 
+	# obsolete when ERB:ed
 	def to_s
 		field = @field.capitalize
 		"#{field} set to #{@newvalue}"
@@ -21,6 +22,7 @@ class Added
 		@instance = instance
 	end
 
+	# obsolete when ERB:ed
 	def to_s
 		classname = @instance.class.to_s.downcase 
 		"New #{classname} '#{@instance.title}' reported"
@@ -34,6 +36,7 @@ class NewComment
 		@instance = instance
 	end
 
+	# obsolete when ERB:ed
 	def to_s
 		"New comment with text '#{instance.text}'"
 	end
@@ -47,6 +50,7 @@ class Modified
 		@modifications = modifications
 	end
 
+	# obsolete when ERB:ed
 	def to_s
 		classname = @instance.class.to_s
 		modifications = @modifications.join("\n\t") 
@@ -61,6 +65,7 @@ class Closed
 		@instance = instance
 	end
 
+	# obsolete when ERB:ed
 	def to_s
 		classname = @instance.class.to_s
 		"#{classname} '#{instance.title}' has been closed"		
@@ -74,6 +79,7 @@ class Rejected
 		@instance = instance
 	end
 
+	# obsolete when ERB:ed
 	def to_s
 		classname = @instance.class.to_s
 		"#{classname} '#{instance.title}' has been rejected"		
@@ -87,6 +93,7 @@ class Deleted
 		@instance = instance
 	end
 
+	# obsolete when ERB:ed
 	def to_s
 		classname = @instance.class.to_s 
 		"#{classname} '#{@instance.title}' has been deleted"

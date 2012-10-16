@@ -43,8 +43,7 @@ class Repository
 
 	def set(model, filename)
 		content = model.to_yaml
-		path_and_filename = filename #File.join(@path, filename)
-		file = File.new(path_and_filename, 'w')
+		file = File.new(filename, 'w')
 		file.write(content)
 		file.close
 	end

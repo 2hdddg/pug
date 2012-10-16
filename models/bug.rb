@@ -10,6 +10,7 @@ class Bug < Model
 		@status = ''
 	end
 
+	# obsolete when ERB:ed
 	def get_summary_fields
 		super <<
 			{:name => "Status", :value => @status}

@@ -5,6 +5,7 @@ require "repository"
 require "filedifferences"
 Dir["commands/*.rb"].each {|file| require file }
 
+# todo init
 # todo add bug --title="A new bug"
 # todo list --where=status:Open,class:Bug --groupby=status --select=title,filename --format=pretty
 # todo comment 1111_a_new_bug.yml 

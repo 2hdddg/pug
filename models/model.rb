@@ -1,34 +1,7 @@
 $:.unshift(File.dirname(__FILE__))
+require "abstractmodel"
 
-
-class AbstractModel
-	def set(name, value)
-		instance_variable_set '@' + name, value
-	end
-
-	def get(name)
-		instance_variable_get '@' + name
-	end
-
-	def get_prompt_fields
-		[]
-	end
-
-	def prompt(prompt_callback)
-		fields = get_prompt_fields()
-		fields.each do |f|
-			value = get(f.name)
-			if value == ''
-				prompted = prompt_callback.call(f.name, f.prompt, f.default)
-				expanded = f.expand(prompted)
-				set(f.name, expanded)
-			end
-		end
-	end
-
-end
-
-# Base class for models that will be persisted as roots
+# Base class for tracking models like bugs
 class Model < AbstractModel
 	attr_accessor :title, :comments
 
@@ -41,6 +14,7 @@ class Model < AbstractModel
 		[PromptField.new('title', 'Please enter title')]
 	end
 
+	# obsolete when ERB:ed
 	def get_summary_fields
 		[{:name => "Title", :value => @title}]
 	end
@@ -74,6 +48,5 @@ class Model < AbstractModel
 			nil
 		end
 	end
-
 end
 
