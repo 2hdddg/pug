@@ -2,7 +2,7 @@ require "yaml"
 
 $:.unshift(File.dirname(__FILE__))
 
-class ConfigurationRepository
+class Configuration
 	def initialize(path)
 		@path = path
 	end

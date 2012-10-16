@@ -2,7 +2,7 @@
 
 $:.unshift(File.dirname(__FILE__))
 require "repository"
-require "configurationrepository"
+require "configuration"
 require "filedifferences"
 Dir["commands/*.rb"].each {|file| require file }
 
@@ -31,7 +31,7 @@ invoke = {
 }
 
 # make sure that we are configured
-configuration = ConfigurationRepository.new('.')
+configuration = Configuration.new('.')
 if commandname == 'init' || !configuration.has_userconfiguration?
 	puts "There is no configuration available, please provide me with some info..." if commandname != "init"
 	InitCommand.new(configuration).run invoke

@@ -3,10 +3,10 @@ require "fileutils"
 
 File.expand_path('../', __FILE__)
 
-require 'configurationrepository'
+require "configuration"
 require "models/userconfiguration"
 
-class TestConfigurationRepository < Test::Unit::TestCase
+class TestConfiguration < Test::Unit::TestCase
 	def path_to_test_directory
 		File.join(Dir.pwd, 'TestConfigRepository')
 	end
@@ -23,20 +23,20 @@ class TestConfigurationRepository < Test::Unit::TestCase
 	end
 
 	def test_can_report_userconfiguration_is_missing()
-		repository = ConfigurationRepository.new(path_to_test_directory)
+		configuration = Configuration.new(path_to_test_directory)
 
-		assert_equal(false, repository.has_userconfiguration?)
+		assert_equal(false, configuration.has_userconfiguration?)
 	end
 
 	def test_can_persist_userconfiguration()
-		repository = ConfigurationRepository.new(path_to_test_directory)
+		configuration = Configuration.new(path_to_test_directory)
 		userconfiguration = UserConfiguration.new()
 		userconfiguration.signature = '2hdddg'
 
-		repository.set_userconfiguration(userconfiguration)
+		configuration.set_userconfiguration(userconfiguration)
 
-		another_repository = ConfigurationRepository.new(path_to_test_directory)
-		persisted = another_repository.get_userconfiguration
+		another_configuration = Configuration.new(path_to_test_directory)
+		persisted = another_configuration.get_userconfiguration
 
 		assert_equal(persisted.signature, userconfiguration.signature)
 	end
