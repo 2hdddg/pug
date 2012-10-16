@@ -32,14 +32,17 @@ invoke = {
 
 # make sure that we are configured
 configuration = Configuration.new('.')
-if commandname == 'init' || !configuration.has_userconfiguration?
+if commandname == 'init' || !configuration.has_userconfiguration? || !configuration.has_globalconfiguration?
 	puts "There is no configuration available, please provide me with some info..." if commandname != "init"
 	InitCommand.new(configuration).run invoke
 	exit 0 if commandname == 'init'
 end
 
+userconfiguration = configuration.get_userconfiguration()
+globalconfiguration = configuration.get_globalconfiguration()
+
 # path to directory should be read from .todo_global
-repository = Repository.new(File.join('.', 'bugs'))
+repository = Repository.new(File.join('.', globalconfiguration.repository_dir))
 
 command = Meta::command_from_name(commandname, repository)
 if command != nil
