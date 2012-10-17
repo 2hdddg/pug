@@ -18,11 +18,12 @@ class NewComment
 end
 
 class Difference
-	attr_accessor :name_of_difference, :instance, :modifications
+	attr_accessor :name_of_difference, :instance, :modifications, :comments
 
 	def initialize(name_of_difference, instance, modifications = nil)
 		@name_of_difference = name_of_difference
 		@instance = instance
 		@modifications = modifications
+		@comments = []
 	end
 end

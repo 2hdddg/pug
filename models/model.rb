@@ -24,7 +24,7 @@ class Model < AbstractModel
 		@comments << comment
 	end	
 
-	def get_diffs(oldmodel)
+	def add_diffs(oldmodel, difference)
 		modifications = []
 		modifications << Modification.new('title', @title) if oldmodel.title != @title
 
@@ -36,14 +36,17 @@ class Model < AbstractModel
 			@comments.each {|c| modifications << NewComment.new(c)}
 		end
 
-		modifications
+		#modifications
 	end
 
 	def get_diff(oldmodel)
-		modifications = get_diffs(oldmodel)
+		#modifications = get_diffs(oldmodel)
+		difference = Difference.new(:modified, self, []) 
+		add_diffs(oldmodel, difference)
 
-		if modifications.length > 0
-			Difference.new(:modified, self, modifications)
+		if difference.modifications.length > 0
+			difference
+			#Difference.new(:modified, self, modifications)
 		else
 			nil
 		end
