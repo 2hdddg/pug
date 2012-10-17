@@ -7,26 +7,6 @@ class Modification
 		@field = field
 		@newvalue = newvalue
 	end
-
-	# obsolete when ERB:ed
-	def to_s
-		field = @field.capitalize
-		"#{field} set to #{@newvalue}"
-	end
-end
-
-class Added
-	attr_accessor :instance
-
-	def initialize(instance)
-		@instance = instance
-	end
-
-	# obsolete when ERB:ed
-	def to_s
-		classname = @instance.class.to_s.downcase 
-		"New #{classname} '#{@instance.title}' reported"
-	end
 end
 
 class NewComment
@@ -35,67 +15,14 @@ class NewComment
 	def initialize(instance)
 		@instance = instance
 	end
-
-	# obsolete when ERB:ed
-	def to_s
-		"New comment with text '#{instance.text}'"
-	end
 end
 
-class Modified
-	attr_accessor :instance, :modifications
+class Difference
+	attr_accessor :name_of_difference, :instance, :modifications
 
-	def initialize(instance, modifications)
+	def initialize(name_of_difference, instance, modifications = nil)
+		@name_of_difference = name_of_difference
 		@instance = instance
 		@modifications = modifications
 	end
-
-	# obsolete when ERB:ed
-	def to_s
-		classname = @instance.class.to_s
-		modifications = @modifications.join("\n\t") 
-		"#{classname} '#{@instance.title}' was modified\n\t#{modifications}"
-	end
 end
-
-class Closed
-	attr_accessor :instance
-
-	def initialize(instance)
-		@instance = instance
-	end
-
-	# obsolete when ERB:ed
-	def to_s
-		classname = @instance.class.to_s
-		"#{classname} '#{instance.title}' has been closed"		
-	end
-end
-
-class Rejected
-	attr_accessor :instance
-
-	def initialize(instance)
-		@instance = instance
-	end
-
-	# obsolete when ERB:ed
-	def to_s
-		classname = @instance.class.to_s
-		"#{classname} '#{instance.title}' has been rejected"		
-	end
-end
-
-class Deleted
-	attr_accessor :instance
-
-	def initialize(instance)
-		@instance = instance
-	end
-
-	# obsolete when ERB:ed
-	def to_s
-		classname = @instance.class.to_s 
-		"#{classname} '#{@instance.title}' has been deleted"
-	end
-end 

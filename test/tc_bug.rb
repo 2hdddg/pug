@@ -4,6 +4,7 @@ File.expand_path('../', __FILE__)
 require 'models/bug'
 
 class TestBug < Test::Unit::TestCase
+
 	def test_prompt_should_prompt_for_status_field
 		prompted_for_status = false
 		prompt_callback = lambda do |field, description, default|
@@ -72,7 +73,7 @@ class TestBug < Test::Unit::TestCase
 
 		diff = closed.get_diff(open)
 
-		assert_equal('Closed', diff.class.to_s)
+		assert_equal(:closed, diff.name_of_difference)
 	end
 
 	def test_get_diff_when_going_from_open_to_rejected_should_return_rejected_diff
@@ -83,7 +84,7 @@ class TestBug < Test::Unit::TestCase
 
 		diff = rejected.get_diff(open)
 
-		assert_equal('Rejected', diff.class.to_s)
+		assert_equal(:rejected, diff.name_of_difference)
 	end
 end
 	

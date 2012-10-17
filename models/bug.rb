@@ -47,13 +47,15 @@ class Bug < Model
 	end
 
 	def get_diff(oldmodel)
+		difference = super
+
 		# from open to closed
 		if oldmodel.open? && closed?
-			Closed.new(self)
+			difference.name_of_difference = :closed
 		elsif oldmodel.open? && rejected?
-			Rejected.new(self)	
-		else
-			super
+			difference.name_of_difference = :rejected
 		end
+
+		difference
 	end
 end

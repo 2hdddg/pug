@@ -25,7 +25,7 @@ class TestDifferences < Test::Unit::TestCase
 
 		differences = Differences::get(filedifferences, fake1, fake2)
 
-		assert_equal('Added', differences[0].class.to_s)
+		assert_equal(:added, differences[0].name_of_difference)
 	end
 
 	def test_should_be_empty_array_when_nothing_changed()
@@ -51,7 +51,7 @@ class TestDifferences < Test::Unit::TestCase
 
 		differences = Differences::get(filedifferences, fake1, fake2)
 
-		assert_equal('Modified', differences[0].class.to_s)		
+		assert_equal(:modified, differences[0].name_of_difference)		
 	end
 
 	def test_should_detect_deleted_model()
@@ -64,7 +64,7 @@ class TestDifferences < Test::Unit::TestCase
 
 		differences = Differences::get(filedifferences, fake1, fake2)
 
-		assert_equal('Deleted', differences[0].class.to_s)		
+		assert_equal(:deleted, differences[0].name_of_difference)		
 	end		
 
 end

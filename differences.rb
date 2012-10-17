@@ -9,7 +9,7 @@ module Differences
 		# added models
 		added = filedifferences[:only_in_first]
 		added_models = added.map {|f| first_repository.get(f) }
-		added_models.each {|m| differences << Added.new(m) }
+		added_models.each {|m| differences << Difference.new(:added, m) }
 
 		# maybe modified models
 		modified = filedifferences[:in_both]
@@ -26,7 +26,7 @@ module Differences
 		# deleted models
 		deleted = filedifferences[:only_in_second]
 		deleted_models = deleted.map {|f| second_repository.get(f) }
-		deleted_models.each {|m| differences << Deleted.new(m) }
+		deleted_models.each {|m| differences << Difference.new(:deleted, m) }
 
 		differences
 	end

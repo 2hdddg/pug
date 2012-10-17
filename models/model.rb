@@ -43,7 +43,7 @@ class Model < AbstractModel
 		modifications = get_diffs(oldmodel)
 
 		if modifications.length > 0
-			Modified.new(self, modifications)
+			Difference.new(:modified, self, modifications)
 		else
 			nil
 		end

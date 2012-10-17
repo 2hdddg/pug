@@ -1,6 +1,22 @@
+require "erb"
 require 'models/model'
 require "filedifferences"
 require "differences"
+
+class DiffOutput
+	def initialize(differences)
+		@differences = differences
+	end
+
+	def get_binding
+		binding
+	end
+
+	def somefunc
+		'hello'
+	end
+end
+
 
 class DiffCommand
 
@@ -19,7 +35,14 @@ class DiffCommand
 		second_path = invoke[:argv].shift
 		differences = _get_differences(second_path)
 
+		filename = File.join('.', 'templates', 'diff_console_standard.erb')
+		templatetext = File.read(filename)
+		template = ERB.new(templatetext)
+
+		output = DiffOutput.new(differences)
+
+		invoke[:output].call(template.run(output.get_binding))
 		# report diffs for differences
-		differences.each {|d| invoke[:output].call(d)}
+		#differences.each {|d| invoke[:output].call(d)}
 	end
 end
