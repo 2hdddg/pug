@@ -1,5 +1,6 @@
 $:.unshift(File.dirname(__FILE__))
 
+# modification of a single field
 class Modification
 	attr_accessor :field, :newvalue
 
@@ -9,6 +10,7 @@ class Modification
 	end
 end
 
+# new comment added
 class NewComment
 	attr_accessor :instance
 
@@ -23,7 +25,7 @@ class Difference
 	def initialize(name_of_difference, instance, modifications = nil)
 		@name_of_difference = name_of_difference
 		@instance = instance
-		@modifications = modifications
+		@modifications = modifications || []
 		@comments = []
 	end
 end

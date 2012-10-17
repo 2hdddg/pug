@@ -40,10 +40,9 @@ class Bug < Model
 		!closed? && !rejected?
 	end
 
-	def get_diffs(oldmodel)
-		diffs = super
-		diffs << Modification.new('status', @status) if oldmodel.status != @status
-		diffs	
+	def add_diffs(oldmodel, difference)
+		super
+		difference.modifications << Modification.new('status', @status) if oldmodel.status != @status
 	end
 
 	def get_diff(oldmodel)

@@ -25,28 +25,23 @@ class Model < AbstractModel
 	end	
 
 	def add_diffs(oldmodel, difference)
-		modifications = []
-		modifications << Modification.new('title', @title) if oldmodel.title != @title
+		difference.modifications << Modification.new('title', @title) if oldmodel.title != @title
 
 		# Only report new comments
 		if @comments && oldmodel.comments && @comments.length > oldmodel.comments.length
 			new_comments = @comments[oldmodel.comments.length..@comments.length]
-			new_comments.each {|c| modifications << NewComment.new(c) }
+			new_comments.each {|c| difference.comments << NewComment.new(c) }
 		elsif @comments && !oldmodel.comments
-			@comments.each {|c| modifications << NewComment.new(c)}
+			@comments.each {|c| difference.comments << NewComment.new(c)}
 		end
-
-		#modifications
 	end
 
 	def get_diff(oldmodel)
-		#modifications = get_diffs(oldmodel)
 		difference = Difference.new(:modified, self, []) 
 		add_diffs(oldmodel, difference)
 
 		if difference.modifications.length > 0
 			difference
-			#Difference.new(:modified, self, modifications)
 		else
 			nil
 		end
