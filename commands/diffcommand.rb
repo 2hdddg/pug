@@ -12,9 +12,7 @@ class DiffOutput
 		binding
 	end
 
-	def somefunc
-		'hello'
-	end
+	# functionality for group differences by name_of_difference and so on
 end
 
 
@@ -42,7 +40,5 @@ class DiffCommand
 		output = DiffOutput.new(differences)
 
 		invoke[:output].call(template.run(output.get_binding))
-		# report diffs for differences
-		#differences.each {|d| invoke[:output].call(d)}
 	end
 end
