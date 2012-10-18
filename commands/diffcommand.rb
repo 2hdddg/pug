@@ -13,6 +13,9 @@ class DiffOutput
 	end
 
 	# functionality for group differences by name_of_difference and so on
+	def differences_by_name
+		@differences.group_by {|d| d.name_of_difference}
+	end
 end
 
 
@@ -33,7 +36,7 @@ class DiffCommand
 		second_path = invoke[:argv].shift
 		differences = _get_differences(second_path)
 
-		filename = File.join('.', 'templates', 'diff_console_standard.erb')
+		filename = File.join('.', 'templates', 'diff_console_grouped.erb')
 		templatetext = File.read(filename)
 		template = ERB.new(templatetext)
 
