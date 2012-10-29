@@ -12,7 +12,10 @@ How?
 
 Add a bug:
 > ruby todo.rb add bug
+..and enter the required information to report a bug
+A new file with the information will be created, commit the file to git/hg/svn/whatever
 
-Generate diff in folder _releasefolder_:
+When releasing your code (along with updated statuses on bugs):
+Generate difference betwwen the state of bugs in what you are about to release compared to what's already released(folder _releasefolder_):
 > ruby todo.rb diff _releasefolder_
-
+..and then copy the state of bugs to folder _releasefolder_
