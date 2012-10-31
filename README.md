@@ -1,7 +1,7 @@
-Todo
+Pug
 ====
 
-Todo is a simple light-weight distributed issue tracker that handles what's released on a server.
+Pug is a simple light-weight distributed issue tracker that handles what's released on a server.
 
 Why
 ----
