@@ -41,6 +41,10 @@ class Configuration
 		ensure
 			file.close
 		end
+
+		if !Dir.exists?(model.repository_dir)
+			Dir.mkdir(model.repository_dir)
+		end
 	end
 
 	def get_userconfiguration()

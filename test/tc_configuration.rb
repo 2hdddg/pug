@@ -51,7 +51,7 @@ class TestConfiguration < Test::Unit::TestCase
 	def test_can_persist_globalconfiguration()
 		configuration = Configuration.new(path_to_test_directory)
 		globalconfiguration = GlobalConfiguration.new()
-		globalconfiguration.repository_dir = 'xxx'
+		globalconfiguration.repository_dir = File.join(path_to_test_directory, 'xxx')
 
 		configuration.set_globalconfiguration(globalconfiguration)
 
@@ -59,5 +59,17 @@ class TestConfiguration < Test::Unit::TestCase
 		persisted = another_configuration.get_globalconfiguration
 
 		assert_equal(persisted.repository_dir, globalconfiguration.repository_dir)
+	end
+
+	def test_should_create_directory_for_repository_if_not_exists()
+		configuration = Configuration.new(path_to_test_directory)
+		globalconfiguration = GlobalConfiguration.new()
+		globalconfiguration.repository_dir = File.join(path_to_test_directory, 'xxx')
+
+		configuration.set_globalconfiguration(globalconfiguration)
+
+
+		assert(Dir.exists?(globalconfiguration.repository_dir), 'Should have created directory for repository')
+
 	end
 end
