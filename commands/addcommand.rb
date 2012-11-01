@@ -3,7 +3,7 @@ require "meta"
 require "parse"
 
 class AddCommand
-	def initialize(repository)
+	def initialize(repository, userconfiguration, globalgonfiguration)
 		@repository = repository
 	end
 

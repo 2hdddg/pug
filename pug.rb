@@ -44,7 +44,7 @@ globalconfiguration = configuration.get_globalconfiguration()
 # path to directory should be read from .todo_global
 repository = Repository.new(File.join('.', globalconfiguration.repository_dir))
 
-command = Meta::command_from_name(commandname, repository)
+command = Meta::command_from_name(commandname, repository, userconfiguration, globalconfiguration)
 if command != nil
 	command.run invoke 
 	exit 0

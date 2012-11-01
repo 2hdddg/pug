@@ -21,7 +21,7 @@ end
 
 class DiffCommand
 
-	def initialize(first_repository)
+	def initialize(first_repository, userconfiguration, globalgonfiguration)
 		@first_repository = first_repository
 	end
 

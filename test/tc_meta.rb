@@ -18,19 +18,19 @@ class TestMeta < Test::Unit::TestCase
 	end
 
 	def test_can_init_addcommand_class_from_string
-		command = Meta::command_from_name('Add', nil)
+		command = Meta::command_from_name('Add', nil, nil, nil)
 		
 		assert_equal('AddCommand', command.class.name)
 	end
 
 	def test_can_init_addcommand_class_from_lowercase_string
-		command = Meta::command_from_name('add', nil)
+		command = Meta::command_from_name('add', nil, nil, nil)
 		
 		assert_equal('AddCommand', command.class.name)
 	end
 
 	def test_returns_nil_when_command_class_not_found
-		command = Meta::command_from_name('xxxxxx', nil)
+		command = Meta::command_from_name('xxxxxx', nil, nil, nil)
 
 		assert_equal(nil, command)
 	end

@@ -1,6 +1,6 @@
 
 class ListCommand
-	def initialize(repository)
+	def initialize(repository, userconfiguration, globalgonfiguration)
 		@repository = repository
 	end
 
