@@ -39,6 +39,11 @@ if commandname == 'init' || !configuration.has_userconfiguration? || !configurat
 	exit 0 if commandname == 'init' || commandname == nil
 end
 
+if commandname == nil
+	commandname = 'help'
+end
+
+
 userconfiguration = configuration.get_userconfiguration()
 globalconfiguration = configuration.get_globalconfiguration()
 
