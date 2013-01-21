@@ -17,7 +17,7 @@ class TestListCommand < Test::Unit::TestCase
 	def test_run_should_output_title_of_all_bugs
 		bugs = []
 		fake = FakeRepository.new
-		command = ListCommand.new(fake, nil, nil)
+		command = Commands::ListCommand.new(fake, nil, nil)
 		invoke = {
 			:argv   => [],
 			:prompt => lambda {|name, desc, default| default },

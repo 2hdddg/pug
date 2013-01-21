@@ -23,7 +23,7 @@ class TestAddCommand < Test::Unit::TestCase
 	def test_run_should_add_bug_to_repository
 		fake = FakeRepository.new
 		prompt_callback = lambda {|name, desc, default| default }
-		command = AddCommand.new(fake, nil, nil)
+		command = Commands::AddCommand.new(fake, nil, nil)
 		invoke = {
 			:argv   => ["Bug", "--title=\"A new bug\""],
 			:prompt => prompt_callback,
@@ -38,7 +38,7 @@ class TestAddCommand < Test::Unit::TestCase
 
 	def test_run_should_use_prompt_callback
 		fake = FakeRepository.new
-		command = AddCommand.new(fake, nil, nil)
+		command = Commands::AddCommand.new(fake, nil, nil)
 		called = false
 		invoke = {
 			:argv   => ["Bug"],
@@ -52,3 +52,4 @@ class TestAddCommand < Test::Unit::TestCase
 		assert_equal(true, called)
 	end
 end
+

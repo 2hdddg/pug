@@ -11,7 +11,7 @@ class TestHelpCommand < Test::Unit::TestCase
 	def test_run_should_output_names_of_all_commands_when_no_additional_parameters
 		outputted = []
 		prompt_callback = lambda {|output| outputted.push output }
-		command = HelpCommand.new(nil, nil, nil)
+		command = Commands::HelpCommand.new(nil, nil, nil)
 		invoke = {
 			:argv   => [],
 			:prompt => nil,

@@ -1,10 +1,14 @@
 $:.unshift(File.expand_path('../../', __FILE__))
 
-class HelpCommand
-	def initialize(first_repository, userconfiguration, globalgonfiguration)
-	end
+module Commands
 
-	def run(invoke)
-		invoke[:output].call 'Use pug help <command>'
+	class HelpCommand
+		def initialize(first_repository, userconfiguration, globalgonfiguration)
+		end
+
+		def run(invoke)
+			invoke[:output].call 'Use pug help <command>'
+			Meta::list_of_commands.each {|command| invoke[:output].call command}
+		end
 	end
 end
