@@ -23,5 +23,22 @@ class TestHelpCommand < Test::Unit::TestCase
 		assert_operator outputted.length, :>, 0
 	end
 
+	def test_run_should_invoke_help_function_on_command_when_one_parameter
+		outputted = []
+		prompt_callback = lambda {|output| outputted.push output }
+		command = Commands::HelpCommand.new(nil, nil, nil)
+		invoke = {
+			:argv   => ['help'],
+			:prompt => nil,
+			:output => prompt_callback,
+		}
+
+		command.run invoke
+
+		known_to_be_outputted = []
+		command.help lambda {|output| known_to_be_outputted.push output }
+
+		assert_equal known_to_be_outputted, outputted		
+	end
 end
 
