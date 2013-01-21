@@ -3,7 +3,7 @@ require "models/comment"
 require "parse"
 
 class CommentCommand
-	def initialize(repository)
+	def initialize(repository, userconfiguration, globalgonfiguration)
 		@repository = repository
 	end
 

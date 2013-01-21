@@ -4,4 +4,4 @@ oldbugs
 .todo_user
 .todo_global
 *.swp
-
+*.sublime-*
