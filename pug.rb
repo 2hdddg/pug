@@ -4,7 +4,8 @@ $:.unshift(File.dirname(__FILE__))
 require "repository"
 require "configuration"
 require "filedifferences"
-Dir["commands/*.rb"].each {|file| require file }
+# include all commands
+Dir[File.dirname(__FILE__) + "commands/*.rb"].each {|file| require file }
 
 # todo add bug --title="A new bug"
 # todo list --where=status:Open,class:Bug --groupby=status --select=title,filename --format=pretty

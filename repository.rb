@@ -3,7 +3,8 @@ require "yaml"
 
 $:.unshift(File.dirname(__FILE__))
 require "format"
-Dir["models/*.rb"].each {|file| require file }
+# include all models
+Dir[File.dirname(__FILE__) + "/models/*.rb"].each {|file| require file }
 
 class Repository
 	attr_reader :path
