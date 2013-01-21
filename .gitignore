@@ -1,7 +1,7 @@
 # temp 
 bugs
 oldbugs
-.todo_user
-.todo_global
+.pug_user
+.pug_global
 *.swp
 *.sublime-*

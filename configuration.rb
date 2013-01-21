@@ -8,11 +8,11 @@ class Configuration
 	end
 
 	def _userconfiguration_filename()
-		File.join(@path, '.todo_user')
+		File.join(@path, '.pug_user')
 	end
 
 	def _globalconfiguration_filename()
-		File.join(@path, '.todo_global')
+		File.join(@path, '.pug_global')
 	end
 
 	def has_userconfiguration?
