@@ -5,7 +5,7 @@ require "repository"
 require "configuration"
 require "filedifferences"
 # include all commands
-Dir[File.dirname(__FILE__) + "commands/*.rb"].each {|file| require file }
+Dir[File.dirname(__FILE__) + "/commands/*.rb"].each {|file| require file }
 
 # pug add bug --title="A new bug"
 # pug list --where=status:Open,class:Bug --groupby=status --select=title,filename --format=pretty
@@ -36,7 +36,7 @@ configuration = Configuration.new('.')
 if commandname == 'init' || !configuration.has_userconfiguration? || !configuration.has_globalconfiguration?
 	puts "There is no configuration available, please provide me with some info..." if commandname != "init"
 	InitCommand.new(configuration).run invoke
-	exit 0 if commandname == 'init'
+	exit 0 if commandname == 'init' || commandname == nil
 end
 
 userconfiguration = configuration.get_userconfiguration()
