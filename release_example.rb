@@ -43,7 +43,7 @@ puts "Current release #{path_to_current_repository} will be moved to #{path_to_m
 puts "New release will be copied to #{path_to_current_repository}"
 
 path_to_pug = File.dirname(__FILE__) + "/pug.rb"
-reportname = 'diff_console_standard.erb'
+reportname = 'diff_html_standard.erb'
 command = "ruby #{path_to_pug} diff #{path_to_current_repository} #{path_to_new_repository} #{reportname}"
 
 stdin, stdout, stderr = Open3.popen3(command)
