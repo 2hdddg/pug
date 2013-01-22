@@ -7,23 +7,27 @@ module Commands
 	class CommentCommand
 		def initialize(repository, userconfiguration, globalgonfiguration)
 			@repository = repository
+			@userconfiguration = userconfiguration
 		end
 
 		def run(commandcontext)
-			filename = commandcontext.pop_argument!  #invoke[:argv].shift
+			filename = commandcontext.pop_argument!
 			modelToCommentOn = @repository.get(filename)
 
-			model = Models::Comment.new()
-			# set fields on model from parameters
+			comment = Models::Comment.new()
+			# tag comment with signature of user
+			comment.signature = @userconfiguration.signature
+
+			# set fields on comment from parameters
 			while commandcontext.number_of_arguments > 0
 				option = commandcontext.pop_argument!
 				nv =  Parse.option_to_name_and_value(option)
-				model.set nv[:name], nv[:value]
+				comment.set nv[:name], nv[:value]
 			end
 
-			model.prompt commandcontext.prompt_as_lambda
+			comment.prompt commandcontext.prompt_as_lambda
 
-			modelToCommentOn.add_comment model
+			modelToCommentOn.add_comment comment
 			@repository.set(modelToCommentOn, filename)
 		end
 	end

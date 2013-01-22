@@ -9,11 +9,12 @@ require "commands/commandcontext"
 Dir[File.dirname(__FILE__) + "/commands/*.rb"].each {|file| require file }
 
 # feature prio:
+# - 
+# - save signum of user that wrote comment
+# - save date and time of when a comment was written
 # - help on add command (show available models like bug)
 # - save signum of user that created bug
 # - save date and time of when a bug was created
-# - save signum of user that wrote comment
-# - save date and time of when a comment was written
 # - help on diff command
 # - help on comment command
 # - add using a temp template file and starting a texteditor

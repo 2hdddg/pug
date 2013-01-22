@@ -2,10 +2,12 @@ $:.unshift(File.expand_path('../../', __FILE__))
 
 module Commands
 	class CommandContext
+		attr_accessor :output_lambda, :prompt_lambda
+
 		def initialize(arguments, output, prompt)
 			@arguments = arguments
-			@output = output
-			@prompt = prompt
+			@output_lambda = output
+			@prompt_lambda = prompt
 		end
 
 		def pop_argument!
@@ -17,11 +19,11 @@ module Commands
 		end
 
 		def output(s)
-			@output.call(s)
+			@output_lambda.call(s)
 		end
 
 		def prompt(field, text, defaultvalue)
-			@prompt.call(field, text, defaultvalue)
+			@prompt_lambda.call(field, text, defaultvalue)
 		end
 
 		def prompt_as_lambda

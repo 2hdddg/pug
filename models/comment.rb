@@ -2,7 +2,7 @@ $:.unshift(File.dirname(__FILE__))
 
 module Models
 	class Comment < AbstractModel
-		attr_accessor :text
+		attr_accessor :text, :signature
 
 		def initialize
 			@text = ''
