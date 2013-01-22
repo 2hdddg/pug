@@ -12,17 +12,17 @@ module Commands
 		def run(invoke)
 			args = invoke[:argv]
 			if args.length == 0
-				help(invoke[:output])
+				help(invoke)
 			elsif args.length == 1
 				command = Meta::command_from_name(args[0], @repository, @userconfiguration, @globalgonfiguration)
 				if command != nil
-					command.help(invoke[:output])
+					command.help(invoke)
 				end
 			end
-
 		end
 
-		def help(output)
+		def help(invoke)
+			output = invoke[:output]
 			output.call 'Use pug help <command>'
 			Meta::list_of_commands.each {|command| output.call command}
 		end

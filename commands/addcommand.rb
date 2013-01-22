@@ -25,5 +25,10 @@ module Commands
 
 			@repository.add(model)
 		end
+
+		def help(invoke)
+			output = invoke[:output]
+			output.call 'hello'
+		end
 	end
 end
