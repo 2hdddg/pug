@@ -35,9 +35,14 @@ module Commands
 
 		def run(commandcontext)
 			path_to_old_repository = commandcontext.pop_argument!
+			templatename = 'diff_console_standard.erb'
+			if commandcontext.number_of_arguments > 0
+				templatename = commandcontext.pop_argument!
+			end
+
 			differences = _get_differences(path_to_old_repository)
 
-			filename = File.join('.', 'templates', 'diff_console_grouped.erb')
+			filename = File.join('.', 'templates', templatename)
 			templatetext = File.read(filename)
 			template = ERB.new(templatetext)
 

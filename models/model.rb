@@ -16,11 +16,6 @@ module Models
 			[PromptField.new('title', 'Please enter title')]
 		end
 
-		# obsolete when ERB:ed
-		def get_summary_fields
-			[{:name => "Title", :value => @title}]
-		end
-
 		def add_comment(comment)
 			@comments = [] if @comments == nil
 			@comments << comment

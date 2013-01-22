@@ -1,5 +1,17 @@
+require "erb"
 
 module Commands
+	class ListOutput
+		def initialize(repository)
+			@all = repository.all {|filename, model| model }
+		end
+
+		def get_binding
+			binding()
+		end
+
+	end
+
 
 	class ListCommand
 		def initialize(repository, userconfiguration, globalgonfiguration)
@@ -7,13 +19,14 @@ module Commands
 		end
 
 		def run(commandcontext)
-			@repository.all do |f, m| 
-				formatted = "#{File.basename(f)}\n=============================================================================="
-				fields = m.get_summary_fields
-				fields.each {|f| formatted = formatted + "\n#{f[:name]}:#{f[:value]}" }
-				formatted = formatted + "\n\n"
-				commandcontext.output formatted 
-			end
+			templatename = 'list_console_standard.erb'
+			templatefilename = File.join('.', 'templates', templatename)
+			templatetext = File.read(templatefilename)
+			template = ERB.new(templatetext)
+
+			output = ListOutput.new(@repository)
+
+			commandcontext.output(template.run(output.get_binding))
 		end
 	end
 end
