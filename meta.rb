@@ -8,6 +8,10 @@ module Meta
 		klass.new
 	end
 
+	def Meta.list_of_tracked_models()
+		Models.constants.select {|x| Models.const_get(x) < Models::Model }.map {|x| Models.const_get(x) }
+	end
+
 	def Meta.command_from_name(commandname, repository, userconfiguration, globalconfiguration)
 		begin
 			klass = Commands.const_get(commandname.capitalize + 'Command')

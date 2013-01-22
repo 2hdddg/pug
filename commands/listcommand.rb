@@ -26,7 +26,8 @@ module Commands
 
 			output = ListOutput.new(@repository)
 
-			commandcontext.output(template.run(output.get_binding))
+			result = template.result(output.get_binding)
+			commandcontext.output(result)
 		end
 	end
 end

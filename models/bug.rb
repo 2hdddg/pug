@@ -15,9 +15,7 @@ module Models
 			super() << 
 				PromptField.new('status', "Please enter initial status", 'Reported', [
 					{ :long => 'Reported',  :short => 'R' },
-					{ :long => 'Confirmed', :short => 'C' },
-					{ :long => 'Assigned',  :short => 'A' },
-					{ :long => 'Fixed', 	:short => 'F' },
+					{ :long => 'Taken',  	:short => 'T' },
 					{ :long => 'Closed',	:short => 'O' },	
 					{ :long => 'Rejected',  :short => 'X' }
 				])

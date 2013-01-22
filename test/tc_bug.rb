@@ -26,7 +26,7 @@ class TestBug < Test::Unit::TestCase
 		model = Models::Bug.new
 		model.prompt prompt_callback
 
-		assert_equal 'Confirmed', model.status
+		assert_equal 'Reported', model.status
 	end
 
 	def test_prompt_should_support_none_case_sensitive_shortcut
@@ -38,19 +38,19 @@ class TestBug < Test::Unit::TestCase
 		model = Models::Bug.new
 		model.prompt prompt_callback
 
-		assert_equal 'Confirmed', model.status
+		assert_equal 'Reported', model.status
 	end
 
 	def test_prompt_should_support_none_case_sensitive_option
 		prompt_callback = lambda do |field, description, default|
 			if field == 'status'
-				return 'confirmed'
+				return 'reported'
 			end
 		end 
 		model = Models::Bug.new
 		model.prompt prompt_callback
 
-		assert_equal 'Confirmed', model.status
+		assert_equal 'Reported', model.status
 	end
 
 	def test_prompt_should_use_default_when_prompt_returns_empty_string

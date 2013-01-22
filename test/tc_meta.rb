@@ -17,6 +17,13 @@ class TestMeta < Test::Unit::TestCase
 		assert_equal('Models::Bug', model.class.name)
 	end
 
+	def test_list_of_tracked_models_returns_bug_since_it_is_trackable
+		models = Meta::list_of_tracked_models
+
+		bug = models.find {|m| m.name == 'Models::Bug' }
+		assert( bug != nil)
+	end
+
 	def test_can_init_addcommand_class_from_string
 		command = Meta::command_from_name('Add', nil, nil, nil)
 		

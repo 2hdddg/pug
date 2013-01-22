@@ -48,7 +48,7 @@ module Commands
 
 			output = DiffOutput.new(differences)
 
-			commandcontext.output(template.run(output.get_binding))
+			commandcontext.output(template.result(output.get_binding))
 		end
 	end
 end
