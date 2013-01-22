@@ -17,6 +17,6 @@ module Meta
 	end
 
 	def Meta.list_of_commands()
-		Commands.constants.select{|x| x =~ /Command$/ }
+		Commands.constants.select{|x| x =~ /Command$/ }.map{|c| c.to_s.gsub /Command$/, '' }
 	end
 end
