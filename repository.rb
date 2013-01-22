@@ -34,10 +34,16 @@ class Repository
 		files.map { |f| yield f, get(f) }
 	end
 
-	def get(filename)
-		filename = File.expand_path(filename)
-		filename = File.join(@path, filename) if not filename.include?(@path)
-		file = File.open(filename)
+	def get(filename_with_optional_path)
+		filename_with_optional_path = File.expand_path(filename_with_optional_path)
+		filename = File.basename(filename_with_optional_path)
+		if filename != filename_with_optional_path
+			filename_with_path = File.join(@path, filename)
+		else
+			filename_with_path = filename_with_optional_path
+		end
+
+		file = File.open(filename_with_path)
 		d = YAML::load(file)
 		file.close
 		d
