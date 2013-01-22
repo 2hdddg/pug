@@ -13,7 +13,7 @@ module Commands
 			filename = commandcontext.pop_argument!  #invoke[:argv].shift
 			modelToCommentOn = @repository.get(filename)
 
-			model = Comment.new()
+			model = Models::Comment.new()
 			# set fields on model from parameters
 			while commandcontext.number_of_arguments > 0
 				option = commandcontext.pop_argument!

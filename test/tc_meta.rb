@@ -8,13 +8,13 @@ class TestMeta < Test::Unit::TestCase
 	def test_can_init_bug_class_from_string
 		model = Meta::model_from_classname('Bug')
 
-		assert_equal('Bug', model.class.name)
+		assert_equal('Models::Bug', model.class.name)
 	end
 
 	def test_can_init_bug_class_from_lowercase_string
 		model = Meta::model_from_classname('bug')
 
-		assert_equal('Bug', model.class.name)
+		assert_equal('Models::Bug', model.class.name)
 	end
 
 	def test_can_init_addcommand_class_from_string

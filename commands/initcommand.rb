@@ -7,11 +7,11 @@ module Commands
 		end
 
 		def run(commandcontext)
-			userconfiguration = UserConfiguration.new
+			userconfiguration = Models::UserConfiguration.new
 			userconfiguration.prompt commandcontext.prompt_as_lambda
 			@configuration.set_userconfiguration(userconfiguration)
 
-			globalconfiguration = GlobalConfiguration.new
+			globalconfiguration = Models::GlobalConfiguration.new
 			globalconfiguration.prompt commandcontext.prompt_as_lambda
 			@configuration.set_globalconfiguration(globalconfiguration)
 		end

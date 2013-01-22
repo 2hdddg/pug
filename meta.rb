@@ -4,7 +4,8 @@ $:.unshift(File.dirname(__FILE__))
 module Meta
 
 	def Meta.model_from_classname(classname)
-		Object.const_get(classname.capitalize).new
+		klass = Models.const_get(classname.capitalize)
+		klass.new
 	end
 
 	def Meta.command_from_name(commandname, repository, userconfiguration, globalconfiguration)

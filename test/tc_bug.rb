@@ -11,7 +11,7 @@ class TestBug < Test::Unit::TestCase
 			prompted_for_status = true if field == 'status'
 			'abc'
 		end 
-		model = Bug.new
+		model = Models::Bug.new
 		model.prompt prompt_callback
 
 		assert_equal(true, prompted_for_status)
@@ -23,7 +23,7 @@ class TestBug < Test::Unit::TestCase
 				return 'C'
 			end
 		end 
-		model = Bug.new
+		model = Models::Bug.new
 		model.prompt prompt_callback
 
 		assert_equal 'Confirmed', model.status
@@ -35,7 +35,7 @@ class TestBug < Test::Unit::TestCase
 				return 'c'
 			end
 		end 
-		model = Bug.new
+		model = Models::Bug.new
 		model.prompt prompt_callback
 
 		assert_equal 'Confirmed', model.status
@@ -47,7 +47,7 @@ class TestBug < Test::Unit::TestCase
 				return 'confirmed'
 			end
 		end 
-		model = Bug.new
+		model = Models::Bug.new
 		model.prompt prompt_callback
 
 		assert_equal 'Confirmed', model.status
@@ -59,16 +59,16 @@ class TestBug < Test::Unit::TestCase
 				return ''
 			end
 		end 
-		model = Bug.new
+		model = Models::Bug.new
 		model.prompt prompt_callback
 
 		assert_equal 'Reported', model.status
 	end
 
 	def test_get_diff_when_going_from_open_to_closed_should_return_closed_diff
-		open = Bug.new
+		open = Models::Bug.new
 		open.status = 'Reported'
-		closed = Bug.new
+		closed = Models::Bug.new
 		closed.status = 'Closed'
 
 		diff = closed.get_diff(open)
@@ -77,9 +77,9 @@ class TestBug < Test::Unit::TestCase
 	end
 
 	def test_get_diff_when_going_from_open_to_rejected_should_return_rejected_diff
-		open = Bug.new
+		open = Models::Bug.new
 		open.status = 'Reported'
-		rejected = Bug.new
+		rejected = Models::Bug.new
 		rejected.status = 'Rejected'
 
 		diff = rejected.get_diff(open)

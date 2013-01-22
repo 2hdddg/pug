@@ -8,7 +8,7 @@ class TestListCommand < Test::Unit::TestCase
 	
 	class FakeRepository
 		def all
-			bug = Bug.new
+			bug = Models::Bug.new
 			bug.title = 'A bug'
 			yield 'file', bug
 		end

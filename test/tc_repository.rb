@@ -23,22 +23,22 @@ class TestRepository < Test::Unit::TestCase
 
 	def test_add_should_persist_model
 		repository = Repository.new(path_to_test_directory)
-		bug = Bug.new
+		bug = Models::Bug.new
 		bug.title = 'A new bug'
 
 		repository.add(bug)
 
 		all = repository.all { |f, d|  d } 
 		assert_equal(all.length, 1)
-		assert_equal('Bug', all[0].class.name)
+		assert_equal('Models::Bug', all[0].class.name)
 		assert_equal('A new bug', all[0].title)	
 	end
 
 	def test_all_should_yield_filename_and_model
 		repository = Repository.new(path_to_test_directory)
-		bug1 = Bug.new
+		bug1 = Models::Bug.new
 		bug1.title = 'A new bug'
-		bug2 = Bug.new
+		bug2 = Models::Bug.new
 		bug2.title = 'Another bug'
 		filename1 = repository.add(bug1)
 		filename2 = repository.add(bug2)
@@ -52,19 +52,19 @@ class TestRepository < Test::Unit::TestCase
 
 	def test_get_should_retrive_model
 		repository = Repository.new(path_to_test_directory)
-		bug = Bug.new
+		bug = Models::Bug.new
 		bug.title = 'A new bug'
 		filename = repository.add(bug)
 
 		bug = repository.get(filename)
 		
-		assert_equal('Bug', bug.class.name)
+		assert_equal('Models::Bug', bug.class.name)
 		assert_equal('A new bug', bug.title)			
 	end
 
 	def test_set_should_persist_changes
 		repository = Repository.new(path_to_test_directory)
-		bug = Bug.new
+		bug = Models::Bug.new
 		bug.title = 'A new bug'
 		filename = repository.add(bug)
 		bug = repository.get(filename)

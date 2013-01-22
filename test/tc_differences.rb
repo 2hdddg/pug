@@ -20,7 +20,7 @@ class TestDifferences < Test::Unit::TestCase
 	def test_should_detect_added_model()
 		filedifferences = { :only_in_first =>  ['x'], :in_both => [], :only_in_second => [] }
 		fake1 = FakeRepository.new	
-		fake1.to_get = Bug.new
+		fake1.to_get = Models::Bug.new
 		fake2 = FakeRepository.new 
 
 		differences = Differences::get(filedifferences, fake1, fake2)
@@ -31,7 +31,7 @@ class TestDifferences < Test::Unit::TestCase
 	def test_should_be_empty_array_when_nothing_changed()
 		filedifferences = { :only_in_first =>  [], :in_both => ['x'], :only_in_second => [] }
 		fake1 = FakeRepository.new	
-		fake1.to_get = Bug.new
+		fake1.to_get = Models::Bug.new
 		fake2 = FakeRepository.new
 		fake2.to_get = fake1.to_get 
 
@@ -43,10 +43,10 @@ class TestDifferences < Test::Unit::TestCase
 	def test_should_detect_modified_model()
 		filedifferences = { :only_in_first =>  [], :in_both => ['x'], :only_in_second => [] }
 		fake1 = FakeRepository.new	
-		fake1.to_get = Bug.new
+		fake1.to_get = Models::Bug.new
 		fake1.to_get.title = 'to this'
 		fake2 = FakeRepository.new
-		fake2.to_get = Bug.new
+		fake2.to_get = Models::Bug.new
 		fake2.to_get.status = 'from this'
 
 		differences = Differences::get(filedifferences, fake1, fake2)
@@ -57,9 +57,9 @@ class TestDifferences < Test::Unit::TestCase
 	def test_should_detect_deleted_model()
 		filedifferences = { :only_in_first =>  [], :in_both => [], :only_in_second => ['x'] }
 		fake1 = FakeRepository.new	
-		fake1.to_get = Bug.new
+		fake1.to_get = Models::Bug.new
 		fake2 = FakeRepository.new
-		fake2.to_get = Bug.new
+		fake2.to_get = Models::Bug.new
 		fake2.to_get.status = 'it has been deleted'
 
 		differences = Differences::get(filedifferences, fake1, fake2)
