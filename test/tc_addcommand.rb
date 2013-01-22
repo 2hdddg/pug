@@ -44,5 +44,17 @@ class TestAddCommand < Test::Unit::TestCase
 
 		assert_equal(true, called)
 	end
+
+	def test_help_should_return_list_of_trackable_models_when_no_more_parameters
+		fake = FakeRepository.new
+		addcommand = Commands::AddCommand.new(fake, nil, nil)
+		outputted = []
+		commandcontext = Commands::CommandContext.new([], lambda {|s| outputted.push(s)}, lambda {|name, desc, default| default })
+
+		addcommand.help commandcontext
+
+		found = outputted.find {|x| x.include?('Bug')}
+		assert(found != nil)
+	end
 end
 

@@ -27,7 +27,8 @@ module Commands
 		end
 
 		def help(commandcontext)
-			commandcontext.output 'hello'
+			commandcontext.output 'Use pug add <model>'
+			Meta::list_of_tracked_models.each {|model| commandcontext.output model }
 		end
 	end
 end

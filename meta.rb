@@ -9,7 +9,8 @@ module Meta
 	end
 
 	def Meta.list_of_tracked_models()
-		Models.constants.select {|x| Models.const_get(x) < Models::Model }.map {|x| Models.const_get(x) }
+		Models.constants.select {|x| Models.const_get(x) < Models::Model }.map {|x| x.to_s }
+		#.map {|x| Models.const_get(x) }
 	end
 
 	def Meta.command_from_name(commandname, repository, userconfiguration, globalconfiguration)

@@ -20,7 +20,7 @@ class TestMeta < Test::Unit::TestCase
 	def test_list_of_tracked_models_returns_bug_since_it_is_trackable
 		models = Meta::list_of_tracked_models
 
-		bug = models.find {|m| m.name == 'Models::Bug' }
+		bug = models.find {|m| m == 'Bug' }
 		assert( bug != nil)
 	end
 
