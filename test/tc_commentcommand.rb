@@ -1,4 +1,5 @@
 require 'test/unit'
+require 'time'
 
 $:.unshift(File.expand_path('../../', __FILE__))
 require 'commands/commentcommand'
@@ -29,5 +30,20 @@ class TestCommentCommand < Test::Unit::TestCase
 
 		comment = repository.has_been_set.comments[0]
 		assert_equal 'xyz', comment.signature
+	end
+
+	def test_run_should_set_now_on_comment
+		repository = FakeRepository.new
+		repository.to_get = Models::Bug.new()
+		userconfiguration = Models::UserConfiguration.new
+		commentcommand = Commands::CommentCommand.new(repository, userconfiguration, nil)
+		commandcontext = Commands::CommandContext.new(["the_filename"], lambda {|s| default }, lambda {|name, desc, default| default })
+		now = DateTime.now
+		commandcontext.now_lambda = lambda {|| now }
+
+		commentcommand.run commandcontext
+
+		comment = repository.has_been_set.comments[0]
+		assert_equal now, comment.datetime
 	end
 end

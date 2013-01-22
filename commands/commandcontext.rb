@@ -1,13 +1,15 @@
 $:.unshift(File.expand_path('../../', __FILE__))
+require 'time'
 
 module Commands
 	class CommandContext
-		attr_accessor :output_lambda, :prompt_lambda
+		attr_accessor :output_lambda, :prompt_lambda, :now_lambda
 
 		def initialize(arguments, output, prompt)
 			@arguments = arguments
 			@output_lambda = output
 			@prompt_lambda = prompt
+			@now_lambda = lambda {|| DateTime.now }
 		end
 
 		def pop_argument!
@@ -28,6 +30,10 @@ module Commands
 
 		def prompt_as_lambda
 			lambda {|field, text, defaultvalue| prompt field, text, defaultvalue }
+		end
+
+		def get_now
+			@now_lambda.call
 		end
 	end
 end

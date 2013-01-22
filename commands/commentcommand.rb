@@ -17,6 +17,7 @@ module Commands
 			comment = Models::Comment.new()
 			# tag comment with signature of user
 			comment.signature = @userconfiguration.signature
+			comment.datetime = commandcontext.get_now
 
 			# set fields on comment from parameters
 			while commandcontext.number_of_arguments > 0
