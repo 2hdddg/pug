@@ -23,24 +23,25 @@ module Commands
 	class DiffCommand
 
 		def initialize(repository, userconfiguration, globalgonfiguration)
-			@repository = repository
 		end
 
-		def _get_differences(path_to_old_repository)
-			filedifferences = Filedifferences::get(@repository.path, path_to_old_repository)
+		def _get_differences(path_to_old_repository, path_to_new_repository)
+			filedifferences = Filedifferences::get(path_to_new_repository, path_to_old_repository)
+			new_repository = Repository.new(path_to_new_repository)
 			old_repository = Repository.new(path_to_old_repository)
-			differences = Differences::get(filedifferences, @repository, old_repository)
+			differences = Differences::get(filedifferences, new_repository, old_repository)
 			differences
 		end
 
 		def run(commandcontext)
 			path_to_old_repository = commandcontext.pop_argument!
+			path_to_new_repository = commandcontext.pop_argument!
 			templatename = 'diff_console_standard.erb'
 			if commandcontext.number_of_arguments > 0
 				templatename = commandcontext.pop_argument!
 			end
 
-			differences = _get_differences(path_to_old_repository)
+			differences = _get_differences(path_to_old_repository, path_to_new_repository)
 
 			filename = File.join('.', 'templates', templatename)
 			templatetext = File.read(filename)

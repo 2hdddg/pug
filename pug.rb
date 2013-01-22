@@ -35,11 +35,6 @@ end
 
 commandcontext = Commands::CommandContext.new(ARGV, output_callback, prompt_callback)
 commandname = commandcontext.pop_argument!
-#invoke = {
-#	:argv   => ARGV,
-#	:prompt => prompt_callback,
-#	:output => output_callback,
-#}
 
 # make sure that we are configured
 configuration = Configuration.new('.')
@@ -67,3 +62,9 @@ else
 	puts "Unknown command #{commandname}"
 	exit 1
 end
+
+
+
+
+
+
