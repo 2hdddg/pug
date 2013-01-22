@@ -1,6 +1,7 @@
 require 'test/unit'
 
 $:.unshift(File.expand_path('../../', __FILE__))
+require 'commands/commandcontext'
 require 'commands/addcommand'
 
 class TestAddCommand < Test::Unit::TestCase
@@ -24,13 +25,9 @@ class TestAddCommand < Test::Unit::TestCase
 		fake = FakeRepository.new
 		prompt_callback = lambda {|name, desc, default| default }
 		command = Commands::AddCommand.new(fake, nil, nil)
-		invoke = {
-			:argv   => ["Bug", "--title=\"A new bug\""],
-			:prompt => prompt_callback,
-			:output => @output_callback,
-		}
+		commandcontext = Commands::CommandContext.new(["Bug", "--title=\"A new bug\""], @output_callback, prompt_callback)
 
-		command.run invoke
+		command.run commandcontext
 
 		assert_equal(1, fake.added.length)
 		assert_equal('A new bug', fake.added[0].title)
@@ -40,14 +37,10 @@ class TestAddCommand < Test::Unit::TestCase
 		fake = FakeRepository.new
 		command = Commands::AddCommand.new(fake, nil, nil)
 		called = false
-		invoke = {
-			:argv   => ["Bug"],
-			:prompt => lambda {|name, desc, default| called = true },
-			:output => @output_callback,
-		}
+		commandcontext = Commands::CommandContext.new(["Bug"], @output_callback, lambda {|name, desc, default| called = true })
 
 		# missing required field: title
-		command.run invoke
+		command.run commandcontext
 
 		assert_equal(true, called)
 	end

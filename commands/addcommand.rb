@@ -9,26 +9,25 @@ module Commands
 			@repository = repository
 		end
 
-		def run(invoke)
-			classname = invoke[:argv].shift
+		def run(commandcontext)
+			classname = commandcontext.pop_argument!  #invoke[:argv].shift
 			model = Meta::model_from_classname(classname)
 
 			# set fields on model from parameters
-			while invoke[:argv].length > 0
-				option = invoke[:argv].shift
+			while commandcontext.number_of_arguments > 0
+				option = commandcontext.pop_argument!
 				nv =  Parse.option_to_name_and_value(option)
 				model.set nv[:name], nv[:value]
 			end
 
 			# let the model prompt for additional fields 
-			model.prompt invoke[:prompt]
+			model.prompt commandcontext.prompt_as_lambda
 
 			@repository.add(model)
 		end
 
-		def help(invoke)
-			output = invoke[:output]
-			output.call 'hello'
+		def help(commandcontext)
+			commandcontext.output 'hello'
 		end
 	end
 end

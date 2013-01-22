@@ -18,16 +18,11 @@ class TestListCommand < Test::Unit::TestCase
 		bugs = []
 		fake = FakeRepository.new
 		command = Commands::ListCommand.new(fake, nil, nil)
-		invoke = {
-			:argv   => [],
-			:prompt => lambda {|name, desc, default| default },
-			:output => lambda {|o| bugs.push(o)},
-		}
+		commandcontext = Commands::CommandContext.new(['add'], lambda {|o| bugs.push(o)}, lambda {|name, desc, default| default })
 
-		command.run invoke
+		command.run commandcontext
 
 		assert_equal(1, bugs.length)
 		assert(bugs[0].include?('A bug'))
 	end
-
 end

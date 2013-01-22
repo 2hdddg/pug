@@ -9,19 +9,19 @@ module Commands
 			@repository = repository
 		end
 
-		def run(invoke)
-			filename = invoke[:argv].shift
+		def run(commandcontext)
+			filename = commandcontext.pop_argument!  #invoke[:argv].shift
 			modelToCommentOn = @repository.get(filename)
 
 			model = Comment.new()
 			# set fields on model from parameters
-			while invoke[:argv].length > 0
-				option = invoke[:argv].shift
+			while commandcontext.number_of_arguments > 0
+				option = commandcontext.pop_argument!
 				nv =  Parse.option_to_name_and_value(option)
 				model.set nv[:name], nv[:value]
 			end
 
-			model.prompt invoke[:prompt]
+			model.prompt commandcontext.prompt_as_lambda
 
 			modelToCommentOn.add_comment model
 			@repository.set(modelToCommentOn, filename)

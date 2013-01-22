@@ -9,22 +9,21 @@ module Commands
 			@globalgonfiguration = globalgonfiguration
 		end
 
-		def run(invoke)
-			args = invoke[:argv]
-			if args.length == 0
-				help(invoke)
-			elsif args.length == 1
-				command = Meta::command_from_name(args[0], @repository, @userconfiguration, @globalgonfiguration)
+		def run(commandcontext)
+			if commandcontext.number_of_arguments == 0
+				help(commandcontext)
+			else
+				commandname = commandcontext.pop_argument!
+				command = Meta::command_from_name(commandname, @repository, @userconfiguration, @globalgonfiguration)
 				if command != nil
-					command.help(invoke)
+					command.help(commandcontext)
 				end
 			end
 		end
 
-		def help(invoke)
-			output = invoke[:output]
-			output.call 'Use pug help <command>'
-			Meta::list_of_commands.each {|command| output.call command}
+		def help(commandcontext)
+			commandcontext.output 'Use pug help <command>'
+			Meta::list_of_commands.each {|command| commandcontext.output command}
 		end
 	end
 end

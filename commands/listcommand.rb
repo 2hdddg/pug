@@ -6,13 +6,13 @@ module Commands
 			@repository = repository
 		end
 
-		def run(invoke)
+		def run(commandcontext)
 			@repository.all do |f, m| 
 				formatted = "#{File.basename(f)}\n=============================================================================="
 				fields = m.get_summary_fields
 				fields.each {|f| formatted = formatted + "\n#{f[:name]}:#{f[:value]}" }
 				formatted = formatted + "\n\n"
-				invoke[:output].call formatted 
+				commandcontext.output formatted 
 			end
 		end
 	end

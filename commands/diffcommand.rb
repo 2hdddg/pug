@@ -33,8 +33,8 @@ module Commands
 			differences
 		end
 
-		def run(invoke)
-			second_path = invoke[:argv].shift
+		def run(commandcontext)
+			second_path = commandcontext.pop_argument!
 			differences = _get_differences(second_path)
 
 			filename = File.join('.', 'templates', 'diff_console_grouped.erb')
