@@ -40,7 +40,7 @@ class Repository
 		file = File.open(filename)
 		d = YAML::load(file)
 		file.close
-		d		
+		d
 	end
 
 	def set(model, filename)
