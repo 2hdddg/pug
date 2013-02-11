@@ -5,6 +5,6 @@ module Format
 
 	def Format.safe_for_filename(s)
 		s.gsub(/[ ]/, '_')
-			.gsub(/[(){}]/, '')
+			.gsub(/[(){}:]/, '')
 	end
 end

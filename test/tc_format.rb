@@ -16,7 +16,7 @@ class TestFormat < Test::Unit::TestCase
 	end
 
 	def test_safe_for_filename_should_remove_special_chars
-		title = 'A title (123){}'
+		title = 'A title (123){}:'
 
 		formatted = Format::safe_for_filename(title)
 
