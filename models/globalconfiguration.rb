@@ -4,11 +4,12 @@ require "model"
 module Models
 
 	class GlobalConfiguration < AbstractModel
-		attr_accessor :repository_dir
+		attr_accessor :repository_dir, :template_dir
 
 		def initialize
 			super
 			@repository_dir = ''
+			@template_dir = ''
 		end
 		
 		def get_prompt_fields

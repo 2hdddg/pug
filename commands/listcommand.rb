@@ -16,11 +16,12 @@ module Commands
 	class ListCommand
 		def initialize(repository, userconfiguration, globalgonfiguration)
 			@repository = repository
+			@globalconfiguration = globalgonfiguration
 		end
 
 		def run(commandcontext)
 			templatename = 'list_console_standard.erb'
-			templatefilename = File.join('.', 'templates', templatename)
+			templatefilename = File.join(@globalconfiguration.template_dir, templatename)
 			templatetext = File.read(templatefilename)
 			template = ERB.new(templatetext)
 
