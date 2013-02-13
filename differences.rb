@@ -8,8 +8,14 @@ module Differences
 
 		# added models
 		added = filedifferences[:only_in_first]
-		added_models = added.map {|f| repository.get(f) }
-		added_models.each {|m| differences << Models::Difference.new(:added, m) }
+		added_models = added.map { |f| 
+			added_model = repository.get(f) 
+			added_model.get_diff_when_new
+		}.keep_if {|d|
+			d != nil
+		}.each {|d|
+			differences << d 
+		}
 
 		# maybe modified models
 		modified = filedifferences[:in_both]

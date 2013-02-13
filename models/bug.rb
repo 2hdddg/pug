@@ -50,5 +50,19 @@ module Models
 
 			difference
 		end
+
+		def get_diff_when_new()
+			difference = super
+
+			if open?
+				difference.name_of_difference = :added
+			elsif closed?
+				difference.name_of_difference = :closed
+			else rejected?
+				difference.name_of_difference = :rejected
+			end
+
+			difference
+		end
 	end
 end

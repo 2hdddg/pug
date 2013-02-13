@@ -43,5 +43,9 @@ module Models
 				nil
 			end
 		end
+
+		def get_diff_when_new()
+			difference = Difference.new(:added, self, []) 
+		end
 	end
 end
