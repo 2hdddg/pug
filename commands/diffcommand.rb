@@ -23,6 +23,7 @@ module Commands
 	class DiffCommand
 
 		def initialize(repository, userconfiguration, globalgonfiguration)
+			@globalconfiguration = globalgonfiguration
 		end
 
 		def _get_differences(path_to_old_repository, path_to_new_repository)
@@ -43,8 +44,8 @@ module Commands
 
 			differences = _get_differences(path_to_old_repository, path_to_new_repository)
 
-			filename = File.join('.', 'templates', templatename)
-			templatetext = File.read(filename)
+			templatefilename = File.join(@globalconfiguration.template_dir, templatename)
+			templatetext = File.read(templatefilename)
 			template = ERB.new(templatetext)
 
 			output = DiffOutput.new(differences)
