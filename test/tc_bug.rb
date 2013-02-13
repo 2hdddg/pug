@@ -86,5 +86,32 @@ class TestBug < Test::Unit::TestCase
 
 		assert_equal(:rejected, diff.name_of_difference)
 	end
+
+	def test_get_diff_when_new_and_bug_is_open_should_return_added_diff
+		open = Models::Bug.new
+		open.status = 'Reported'
+
+		diff = open.get_diff_when_new()
+
+		assert_equal(:added, diff.name_of_difference)
+	end
+
+	def test_get_diff_when_new_and_bug_is_closed_should_return_closed_diff
+		bug = Models::Bug.new
+		bug.status = 'Closed'
+
+		diff = bug.get_diff_when_new()
+
+		assert_equal(:closed, diff.name_of_difference)
+	end
+
+	def test_get_diff_when_rejected_and_bug_is_closed_should_return_closed_diff
+		bug = Models::Bug.new
+		bug.status = 'Rejected'
+
+		diff = bug.get_diff_when_new()
+
+		assert_equal(:rejected, diff.name_of_difference)
+	end
 end
 	
