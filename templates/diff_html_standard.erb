@@ -2,7 +2,7 @@
 <% 
 @differences.each do |d| 
 %>
-	<li>
+	<li class="<%=d.name_of_difference%>">
 <%
 	case d.name_of_difference
 	when :added
