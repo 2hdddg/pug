@@ -1,3 +1,5 @@
+require "erb"
+require "filedifferences"
 
 require "models/diffs"
 
@@ -35,5 +37,19 @@ module Differences
 		deleted_models.each {|m| differences << Models::Difference.new(:deleted, m) }
 
 		differences
+	end
+
+	def self.report(path_to_old_repository, path_to_new_repository, path_to_template)
+		filedifferences = Filedifferences::get(path_to_new_repository, path_to_old_repository)
+		new_repository = Repository.new(path_to_new_repository)
+		old_repository = Repository.new(path_to_old_repository)
+		differences = Differences::get(filedifferences, new_repository, old_repository)
+
+		templatetext = File.read(path_to_template)
+		template = ERB.new(templatetext)
+
+		output = DiffOutput.new(differences)
+
+		template.result(output.get_binding)
 	end
 end
