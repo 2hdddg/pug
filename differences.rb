@@ -3,6 +3,21 @@ require "filedifferences"
 
 require "models/diffs"
 
+class DiffOutput
+	def initialize(differences)
+		@differences = differences
+	end
+
+	def get_binding
+		binding
+	end
+
+	# functionality for group differences by name_of_difference and so on
+	def differences_by_name
+		@differences.group_by {|d| d.name_of_difference}
+	end
+end
+
 module Differences
 
 	def self.get(filedifferences, repository, old_repository)
