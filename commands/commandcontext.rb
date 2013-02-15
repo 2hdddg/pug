@@ -1,5 +1,6 @@
 $:.unshift(File.expand_path('../../', __FILE__))
 require 'time'
+require "commands/headlesscommandcontext"
 
 module Commands
 	class CommandContext
@@ -7,6 +8,7 @@ module Commands
 
 		def initialize(arguments, output, prompt)
 			@arguments = arguments
+			@headless = (@arguments.any? { |arg| arg=='--headless' })
 			@output_lambda = output
 			@prompt_lambda = prompt
 			@now_lambda = lambda {|| DateTime.now }
@@ -25,6 +27,9 @@ module Commands
 		end
 
 		def prompt(field, text, defaultvalue)
+			if @headless
+				raise HeadLessCommandContextException.new()
+			end
 			@prompt_lambda.call(field, text, defaultvalue)
 		end
 
@@ -36,4 +41,5 @@ module Commands
 			@now_lambda.call
 		end
 	end
+	
 end
