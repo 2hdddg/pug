@@ -22,33 +22,34 @@ def validate_path(path)
 	end
 end
 
+def ensure_path(path)
+	if !File.directory?(path)
+		Dir.mkdir(path)
+	end
+	validate_path(path)
+end
+
 path_to_current_repository = ARGV.shift
 path_to_new_repository = ARGV.shift
 path_to_reports = ARGV.shift
-path_to_old_repositories = ARGV.shift
 path_to_templates = ARGV.shift
 
 validate_path path_to_current_repository
 validate_path path_to_new_repository
 validate_path path_to_reports
-validate_path path_to_old_repositories
 
 release_id = generate_release_identifier
-
-path_to_moved_repository = "#{path_to_old_repositories}/#{release_id}"
 
 puts "Generating report for release: #{release_id}"
 puts "Will compare state of current release #{path_to_current_repository} with state of new release #{path_to_new_repository}"
 puts "Report on the difference will be placed in #{path_to_reports}"
-puts "Current release #{path_to_current_repository} will be moved to #{path_to_moved_repository}"
 puts "New release will be copied to #{path_to_current_repository}"
 
 reportfile_path = "#{path_to_reports}/#{release_id}.html"
 path_to_pug = File.dirname(__FILE__) + "/pugdiff.rb"
 template = File.join(path_to_templates, 'diff_html_standard.erb')
-`ruby #{path_to_pug} #{path_to_current_repository} #{path_to_new_repository} #{template} #{reportfile_path}`
 
-FileUtils.mv path_to_current_repository, path_to_moved_repository
+FileUtils.rm_r Dir.glob(File.join(path_to_current_repository, '*.yml')
 FileUtils.mkdir path_to_current_repository
 files = Dir.entries(path_to_new_repository).select {|f| !File.directory?(f) }.map {|f| File.join(path_to_new_repository, f)}
 FileUtils.cp files, path_to_current_repository
