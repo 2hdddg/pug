@@ -20,7 +20,7 @@ end
 type = ARGV.shift
 pugspath_is = ARGV.shift
 pugspath_was = ARGV.shift
-./templatecontenttemplatepath = ARGV.shift
+templatepath = ARGV.shift
 
 tracker_is = Tracker.new(pugspath_is)
 tracker_was = Tracker.new(pugspath_was)
