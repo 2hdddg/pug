@@ -1,20 +1,19 @@
 $:.unshift(File.expand_path('../../', __FILE__))
+require "meta"
 
 module Commands
 
 	class HelpCommand
-		def initialize(first_repository, userconfiguration, globalgonfiguration)
-			@repository = first_repository
-			@userconfiguration = userconfiguration
-			@globalgonfiguration = globalgonfiguration
+		def initialize(tracker)
+			@tracker = tracker
 		end
 
 		def run(commandcontext)
 			if commandcontext.number_of_arguments == 0
 				help(commandcontext)
 			else
-				commandname = commandcontext.pop_argument!
-				command = Meta::command_from_name(commandname, @repository, @userconfiguration, @globalgonfiguration)
+				commandname = commandcontext.pop_argument!("")
+				command = Meta::command_from_name(commandname, @tracker)
 				if command != nil
 					command.help(commandcontext)
 				end

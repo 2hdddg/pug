@@ -1,5 +1,7 @@
 $:.unshift(File.expand_path('../../', __FILE__))
 
+require "configuration"
+
 module Commands
 	class InitCommand
 		def initialize(configuration)
@@ -7,12 +9,8 @@ module Commands
 		end
 
 		def run(commandcontext)
-			userconfiguration = Models::UserConfiguration.new
-			userconfiguration.prompt commandcontext.prompt_as_lambda
-			@configuration.set_userconfiguration(userconfiguration)
-
-			globalconfiguration = Models::GlobalConfiguration.new
-			globalconfiguration.prompt commandcontext.prompt_as_lambda
+			globalconfiguration = GlobalConfiguration.new
+			globalconfiguration.pugspath = commandcontext.prompt "Enter full path to where pugs will be placed"
 			@configuration.set_globalconfiguration(globalconfiguration)
 		end
 	end

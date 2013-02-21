@@ -1,70 +1,31 @@
-require "erb"
-require "filedifferences"
 
-require "models/diffs"
+class Difference
+	attr_accessor :is, :was
 
-class DiffOutput
-	def initialize(differences)
-		@differences = differences
-	end
-
-	def get_binding
-		binding
-	end
-
-	# functionality for group differences by name_of_difference and so on
-	def differences_by_name
-		@differences.group_by {|d| d.name_of_difference}
+	def to_s
+		if was == nil
+			diff = "void => #{is.status}"
+		elsif is == nil
+			diff = "#{was.status} => void"
+		else
+			diff = "#{was.status} => #{is.status}"
+		end
+		"#{is.title}\n" +
+		" #{diff}"
 	end
 end
 
-module Differences
+class Differences
+	def get(type, tracker_is, tracker_was)
+		diffs = []
+		all = tracker_is.all type
+		all.each{|is|
+			diff = Difference.new
+			diff.is = is
+			diff.was = tracker_was.find(type, is.filename)
 
-	def self.get(filedifferences, repository, old_repository)
-		differences = []
-
-		# added models
-		added = filedifferences[:only_in_first]
-		added_models = added.map { |f| 
-			added_model = repository.get(f) 
-			added_model.get_diff_when_new
-		}.keep_if {|d|
-			d != nil
-		}.each {|d|
-			differences << d 
+			diffs.push diff if diff.was == nil || diff.is.status != diff.was.status
 		}
-
-		# maybe modified models
-		modified = filedifferences[:in_both]
-		modified_models = modified.map { |f| 
-			first_model = repository.get(f)
-			second_model = old_repository.get(f)
-			first_model.get_diff(second_model) 
-		}.keep_if { |d| 
-			d != nil 
-		}.each { |d| 
-			differences << d 
-		}
-
-		# deleted models
-		deleted = filedifferences[:only_in_second]
-		deleted_models = deleted.map {|f| old_repository.get(f) }
-		deleted_models.each {|m| differences << Models::Difference.new(:deleted, m) }
-
-		differences
-	end
-
-	def self.report(path_to_old_repository, path_to_new_repository, path_to_template)
-		filedifferences = Filedifferences::get(path_to_new_repository, path_to_old_repository)
-		new_repository = Repository.new(path_to_new_repository)
-		old_repository = Repository.new(path_to_old_repository)
-		differences = Differences::get(filedifferences, new_repository, old_repository)
-
-		templatetext = File.read(path_to_template)
-		template = ERB.new(templatetext)
-
-		output = DiffOutput.new(differences)
-
-		template.result(output.get_binding)
+		diffs
 	end
 end

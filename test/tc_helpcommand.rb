@@ -1,31 +1,46 @@
 require 'test/unit'
 
 $:.unshift(File.expand_path('../../', __FILE__))
+require 'commands/commandcontext'
 require 'commands/helpcommand'
 
 class TestHelpCommand < Test::Unit::TestCase
 	
+	def setup
+		@errors = []
+		@onerror = lambda {|e| @errors.push(e)}
+		exited = false
+		@onexit = lambda {|c| exited = true }
+		@prompts = []
+		@onprompt = lambda {|text| 
+			@prompts.push(text)
+			'A title'
+		}
+		@outputs = []
+		@onoutput = lambda {|text|
+			@outputs.push(text)
+		}
+		@tracker = FakeTracker.new
+	end
+	
+	class FakeTracker
+		attr_reader :added
+
+		def initialize
+			@added = []
+		end
+
+		def add(type, status, title)
+			@added.push({:type => type, :status => status, :title => title})
+		end
+	end
+
 	def test_run_should_output_names_of_all_commands_when_no_additional_parameters
-		outputted = []
-		command = Commands::HelpCommand.new(nil, nil, nil)
-		commandcontext = Commands::CommandContext.new([], lambda {|output| outputted.push output }, nil)
+		command = Commands::HelpCommand.new(@tracker)
+		commandcontext = Commands::CommandContext.new([], @onerror, @onoutput, @onprompt, @onexit)
 
 		command.run commandcontext
 
-		assert_operator outputted.length, :>, 0
-	end
-
-	def test_run_should_invoke_help_function_on_command_when_one_parameter
-		outputted = []
-		helpcommand = Commands::HelpCommand.new(nil, nil, nil)
-		commandcontext = Commands::CommandContext.new(['add'], lambda {|output| outputted.push output }, nil)
-		helpcommand.run commandcontext
-
-		known_to_be_outputted = []
-		commandcontext = Commands::CommandContext.new([], lambda {|output| known_to_be_outputted.push output }, nil)
-		Commands::AddCommand.new(nil, nil, nil).help commandcontext
-
-		assert_equal known_to_be_outputted, outputted
+		assert_operator @outputs.length, :>, 0
 	end
 end
-

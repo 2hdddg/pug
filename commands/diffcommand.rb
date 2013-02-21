@@ -1,27 +1,28 @@
-require "erb"
-require 'models/model'
-require "filedifferences"
+$:.unshift(File.expand_path('../../', __FILE__))
+
+require "tracker"
 require "differences"
 
-
 module Commands
-	class DiffCommand
 
-		def initialize(repository, userconfiguration, globalgonfiguration)
-			@globalconfiguration = globalgonfiguration
+	class DiffCommand
+		def initialize(tracker)
+			@tracker_is = tracker
 		end
 
 		def run(commandcontext)
-			path_to_old_repository = commandcontext.pop_argument!
-			path_to_new_repository = commandcontext.pop_argument!
-			templatename = 'diff_console_standard.erb'
-			
-			if commandcontext.number_of_arguments > 0
-				templatename = commandcontext.pop_argument!
-			end
-			templatefilename = File.join(@globalconfiguration.template_dir, templatename)
+			type = commandcontext.pop_argument! 'Missing type'
+			pugspath_was = commandcontext.pop_argument! 'Missing path to pugs'
+			tracker_was = Tracker.new(pugspath_was)
+			differences = Differences.new()
+			diffs = differences.get(type, @tracker_is, tracker_was)
+			diffs.each {|d|
+				commandcontext.output d
+			}
+		end
 
-			commandcontext.output(Differences::report(path_to_old_repository, path_to_new_repository, templatefilename))
+		def help(commandcontext)
+			commandcontext.output 'Use pug diff <path to pugs to compare to>'
 		end
 	end
 end

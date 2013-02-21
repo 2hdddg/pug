@@ -5,66 +5,73 @@ $:.unshift(File.expand_path('../../', __FILE__))
 require "differences"
 
 class TestDifferences < Test::Unit::TestCase
-	class FakeRepository
-		attr_accessor :to_get, :path
+	def setup
+		@tracker = FakeTracker.new
+	end
+	
+	class FakeTracker
+		attr_accessor :to_find, :to_all
 
 		def initialize
-			@path = 'bbb'
+			@added = []
 		end
 
-		def get(filename)
-			@to_get
+		def find(type, filename)
+			to_find
+		end
+
+		def all(type)
+			to_all
 		end
 	end
 
-	def test_should_detect_added_model()
-		filedifferences = { :only_in_first =>  ['x'], :in_both => [], :only_in_second => [] }
-		fake1 = FakeRepository.new	
-		fake1.to_get = Models::Bug.new
-		fake2 = FakeRepository.new 
+	def test_should_find_status_changed
+		differences = Differences.new()
+		tracker_is = FakeTracker.new
+		tracked_is = Tracked.new()
+		tracked_is.status = 'Closed'
+		tracker_is.to_all = [tracked_is] 
+		tracker_was = FakeTracker.new
+		tracked_was = Tracked.new()
+		tracked_was.status = 'Reported'
+		tracker_was.to_find = tracked_was
 
-		differences = Differences::get(filedifferences, fake1, fake2)
-
-		assert_equal(:added, differences[0].name_of_difference)
+		diffs = differences.get 'Bugs', tracker_is, tracker_was
+		
+		assert_equal(1, diffs.count)
+		assert_equal('Closed', diffs[0].is.status)
+		assert_equal('Reported', diffs[0].was.status)
 	end
 
-	def test_should_be_empty_array_when_nothing_changed()
-		filedifferences = { :only_in_first =>  [], :in_both => ['x'], :only_in_second => [] }
-		fake1 = FakeRepository.new	
-		fake1.to_get = Models::Bug.new
-		fake2 = FakeRepository.new
-		fake2.to_get = fake1.to_get 
+	def test_should_not_report_when_status_is_same
+		differences = Differences.new()
+		tracker_is = FakeTracker.new
+		tracked_is = Tracked.new()
+		tracked_is.status = 'Reported'
+		tracker_is.to_all = [tracked_is] 
+		tracker_was = FakeTracker.new
+		tracked_was = Tracked.new()
+		tracked_was.status = 'Reported'
+		tracker_was.to_find = tracked_was
 
-		differences = Differences::get(filedifferences, fake1, fake2)
-
-		assert_equal(0, differences.length)
+		diffs = differences.get 'Bugs', tracker_is, tracker_was
+		
+		assert_equal(0, diffs.count)
 	end
 
-	def test_should_detect_modified_model()
-		filedifferences = { :only_in_first =>  [], :in_both => ['x'], :only_in_second => [] }
-		fake1 = FakeRepository.new	
-		fake1.to_get = Models::Bug.new
-		fake1.to_get.title = 'to this'
-		fake2 = FakeRepository.new
-		fake2.to_get = Models::Bug.new
-		fake2.to_get.status = 'from this'
+	def test_should_report_when_not_find_in_was
+		differences = Differences.new()
+		tracker_is = FakeTracker.new
+		tracked_is = Tracked.new()
+		tracked_is.status = 'Reported'
+		tracker_is.to_all = [tracked_is] 
+		tracker_was = FakeTracker.new
+		tracker_was.to_find = nil
 
-		differences = Differences::get(filedifferences, fake1, fake2)
-
-		assert_equal(:modified, differences[0].name_of_difference)		
+		diffs = differences.get 'Bugs', tracker_is, tracker_was
+		
+		assert_equal(1, diffs.count)
+		assert_equal(nil, diffs[0].was)
 	end
-
-	def test_should_detect_deleted_model()
-		filedifferences = { :only_in_first =>  [], :in_both => [], :only_in_second => ['x'] }
-		fake1 = FakeRepository.new	
-		fake1.to_get = Models::Bug.new
-		fake2 = FakeRepository.new
-		fake2.to_get = Models::Bug.new
-		fake2.to_get.status = 'it has been deleted'
-
-		differences = Differences::get(filedifferences, fake1, fake2)
-
-		assert_equal(:deleted, differences[0].name_of_difference)		
-	end		
-
 end
+

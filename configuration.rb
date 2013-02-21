@@ -2,35 +2,25 @@ require "yaml"
 
 $:.unshift(File.dirname(__FILE__))
 
+class GlobalConfiguration
+	attr_accessor :pugspath
+
+	def initialize
+		@pugspath = ''
+	end
+end
+
 class Configuration
 	def initialize(path)
 		@path = path
-	end
-
-	def _userconfiguration_filename()
-		File.join(@path, '.pug_user')
 	end
 
 	def _globalconfiguration_filename()
 		File.join(@path, '.pug_global')
 	end
 
-	def has_userconfiguration?
-		File.exists?(_userconfiguration_filename)
-	end
-
 	def has_globalconfiguration?
 		File.exists?(_globalconfiguration_filename)
-	end
-
-	def set_userconfiguration(model)
-		content = model.to_yaml
-		begin
-			file = File.new(_userconfiguration_filename, 'w')
-			file.write(content)
-		ensure
-			file.close
-		end
 	end
 
 	def set_globalconfiguration(model)
@@ -42,19 +32,9 @@ class Configuration
 			file.close
 		end
 
-		if !Dir.exists?(model.repository_dir)
-			Dir.mkdir(model.repository_dir)
+		if !Dir.exists?(model.pugspath)
+			Dir.mkdir(model.pugspath)
 		end
-	end
-
-	def get_userconfiguration()
-		begin
-			file = File.open(_userconfiguration_filename)
-		   	model = YAML::load(file) if file != nil
-			model
-		ensure
-			file.close if file != nil
-		end 
 	end
 
 	def get_globalconfiguration()

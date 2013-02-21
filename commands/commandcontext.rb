@@ -6,15 +6,21 @@ module Commands
 	class CommandContext
 		attr_accessor :output_lambda, :prompt_lambda, :now_lambda
 
-		def initialize(arguments, output, prompt)
+		def initialize(arguments, onerror, onoutput, onprompt, onexit)
 			@arguments = arguments
-			@headless = (@arguments.any? { |arg| arg=='--headless' })
-			@output_lambda = output
-			@prompt_lambda = prompt
+			@headless = (@arguments.any? { |arg| arg == '--headless' })
+			@onerror = onerror
+			@onexit = onexit
+			@onoutput = onoutput
+			@onprompt = onprompt
 			@now_lambda = lambda {|| DateTime.now }
 		end
 
-		def pop_argument!
+		def pop_argument!(text_when_missing)
+			if number_of_arguments == 0
+				@onerror.call(text_when_missing)
+				@onexit.call(1)
+			end
 			@arguments.shift
 		end
 
@@ -23,23 +29,28 @@ module Commands
 		end
 
 		def output(s)
-			@output_lambda.call(s)
+			@onoutput.call(s)
 		end
 
-		def prompt(field, text, defaultvalue)
+		def error(s)
+			@onerror.call(s)
+		end
+
+		def prompt(text)
 			if @headless
 				raise HeadLessCommandContextException.new()
 			end
-			@prompt_lambda.call(field, text, defaultvalue)
+			@onprompt.call(text)
 		end
 
-		def prompt_as_lambda
-			lambda {|field, text, defaultvalue| prompt field, text, defaultvalue }
-		end
+		#def prompt_as_lambda
+		#	lambda {|field, text, defaultvalue| prompt field, text, defaultvalue }
+		#end
 
 		def get_now
 			@now_lambda.call
 		end
+
+
 	end
-	
 end

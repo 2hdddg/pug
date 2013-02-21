@@ -5,30 +5,21 @@ require "parse"
 module Commands
 
 	class AddCommand
-		def initialize(repository, userconfiguration, globalgonfiguration)
-			@repository = repository
+		def initialize(tracker)
+			@tracker = tracker
 		end
 
 		def run(commandcontext)
-			classname = commandcontext.pop_argument!  #invoke[:argv].shift
-			model = Meta::model_from_classname(classname)
+			type = commandcontext.pop_argument! 'Missing type'
+			status = commandcontext.pop_argument! 'Missing status'
 
-			# set fields on model from parameters
-			while commandcontext.number_of_arguments > 0
-				option = commandcontext.pop_argument!
-				nv =  Parse.option_to_name_and_value(option)
-				model.set nv[:name], nv[:value]
-			end
+			title = commandcontext.prompt "Enter a title"
 
-			# let the model prompt for additional fields 
-			model.prompt commandcontext.prompt_as_lambda
-
-			@repository.add(model)
+			@tracker.add(type, status, title)
 		end
 
 		def help(commandcontext)
-			commandcontext.output 'Use pug add <model>'
-			Meta::list_of_tracked_models.each {|model| commandcontext.output model }
+			commandcontext.output 'Use pug add <type of report> <initial status>'
 		end
 	end
 end

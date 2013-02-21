@@ -1,0 +1,22 @@
+<ul>
+<% 
+@differences.each do |d| 
+	if d.is
+		case d.is.status
+		when "Closed"
+%>
+			<li>Closed: <%=d.is.title%></li>
+<%
+		when "Reported"
+%>
+			<li>Opened: <%=d.is.title%></li>
+<%
+		end
+	else
+%>
+	<li>Removed: <%=d.was.title%><li>
+<%
+	end
+end 
+%>
+</ul>

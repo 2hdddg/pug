@@ -1,14 +1,36 @@
 #!/usr/bin/env ruby
 
+require "erb"
+
 $:.unshift(File.dirname(__FILE__))
-require "repository"
+
+require "tracker"
 require "differences"
 
-path_to_old_repository = ARGV.shift
-path_to_new_repository = ARGV.shift
-template_filename = ARGV.shift
-report_filename = ARGV.shift
+class DifferencesModel
+	def initialize(differences)
+		@differences = differences
+	end
 
-report = Differences::report(path_to_old_repository, path_to_new_repository, template_filename)
+	def get_binding
+		binding
+	end
+end
 
-File.open(report_filename, 'w') { |file| file.write(report) }
+type = ARGV.shift
+pugspath_is = ARGV.shift
+pugspath_was = ARGV.shift
+./templatecontenttemplatepath = ARGV.shift
+
+tracker_is = Tracker.new(pugspath_is)
+tracker_was = Tracker.new(pugspath_was)
+
+differences = Differences.new
+diffs = differences.get type, tracker_is, tracker_was
+
+model = DifferencesModel.new(diffs)
+templatecontent = File.read(templatepath)
+template = ERB.new(templatecontent)
+
+report = template.result(model.get_binding)
+puts report
