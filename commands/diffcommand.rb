@@ -1,7 +1,7 @@
 $:.unshift(File.expand_path('../../', __FILE__))
 
 require "tracker"
-require "differences"
+require "deltatracker"
 
 module Commands
 
@@ -14,8 +14,8 @@ module Commands
 			type = commandcontext.pop_argument! 'Missing type'
 			pugspath_was = commandcontext.pop_argument! 'Missing path to pugs'
 			tracker_was = Tracker.new(pugspath_was)
-			differences = Differences.new()
-			diffs = differences.get(type, @tracker_is, tracker_was)
+			deltatracker = DeltaTracker.new()
+			diffs = deltatracker.get(type, @tracker_is, tracker_was)
 			diffs.each {|d|
 				commandcontext.output d
 			}

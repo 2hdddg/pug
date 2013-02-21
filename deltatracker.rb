@@ -1,5 +1,5 @@
 
-class Difference
+class Delta
 	attr_accessor :is, :was
 
 	def to_s
@@ -15,17 +15,17 @@ class Difference
 	end
 end
 
-class Differences
+class DeltaTracker
 	def get(type, tracker_is, tracker_was)
-		diffs = []
+		deltas = []
 		all = tracker_is.all type
 		all.each{|is|
-			diff = Difference.new
-			diff.is = is
-			diff.was = tracker_was.find(type, is.filename)
+			delta = Delta.new
+			delta.is = is
+			delta.was = tracker_was.find(type, is.filename)
 
-			diffs.push diff if diff.was == nil || diff.is.status != diff.was.status
+			deltas.push delta if delta.was == nil || delta.is.status != delta.was.status
 		}
-		diffs
+		deltas
 	end
 end

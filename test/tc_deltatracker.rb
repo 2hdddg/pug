@@ -2,9 +2,9 @@ require 'test/unit'
 
 $:.unshift(File.expand_path('../../', __FILE__))
 
-require "differences"
+require "deltatracker"
 
-class TestDifferences < Test::Unit::TestCase
+class TestDeltaTracker < Test::Unit::TestCase
 	def setup
 		@tracker = FakeTracker.new
 	end
@@ -26,7 +26,7 @@ class TestDifferences < Test::Unit::TestCase
 	end
 
 	def test_should_find_status_changed
-		differences = Differences.new()
+		deltatracker = DeltaTracker.new()
 		tracker_is = FakeTracker.new
 		tracked_is = Tracked.new()
 		tracked_is.status = 'Closed'
@@ -36,7 +36,7 @@ class TestDifferences < Test::Unit::TestCase
 		tracked_was.status = 'Reported'
 		tracker_was.to_find = tracked_was
 
-		diffs = differences.get 'Bugs', tracker_is, tracker_was
+		diffs = deltatracker.get 'Bugs', tracker_is, tracker_was
 		
 		assert_equal(1, diffs.count)
 		assert_equal('Closed', diffs[0].is.status)
@@ -44,7 +44,7 @@ class TestDifferences < Test::Unit::TestCase
 	end
 
 	def test_should_not_report_when_status_is_same
-		differences = Differences.new()
+		deltatracker = DeltaTracker.new()
 		tracker_is = FakeTracker.new
 		tracked_is = Tracked.new()
 		tracked_is.status = 'Reported'
@@ -54,13 +54,13 @@ class TestDifferences < Test::Unit::TestCase
 		tracked_was.status = 'Reported'
 		tracker_was.to_find = tracked_was
 
-		diffs = differences.get 'Bugs', tracker_is, tracker_was
+		diffs = deltatracker.get 'Bugs', tracker_is, tracker_was
 		
 		assert_equal(0, diffs.count)
 	end
 
 	def test_should_report_when_not_find_in_was
-		differences = Differences.new()
+		deltatracker = DeltaTracker.new()
 		tracker_is = FakeTracker.new
 		tracked_is = Tracked.new()
 		tracked_is.status = 'Reported'
@@ -68,7 +68,7 @@ class TestDifferences < Test::Unit::TestCase
 		tracker_was = FakeTracker.new
 		tracker_was.to_find = nil
 
-		diffs = differences.get 'Bugs', tracker_is, tracker_was
+		diffs = deltatracker.get 'Bugs', tracker_is, tracker_was
 		
 		assert_equal(1, diffs.count)
 		assert_equal(nil, diffs[0].was)

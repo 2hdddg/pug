@@ -5,11 +5,11 @@ require "erb"
 $:.unshift(File.dirname(__FILE__))
 
 require "tracker"
-require "differences"
+require "deltatracker"
 
-class DifferencesModel
-	def initialize(differences)
-		@differences = differences
+class DeltasModel
+	def initialize(deltas)
+		@deltas = deltas
 	end
 
 	def get_binding
@@ -25,10 +25,10 @@ pugspath_was = ARGV.shift
 tracker_is = Tracker.new(pugspath_is)
 tracker_was = Tracker.new(pugspath_was)
 
-differences = Differences.new
-diffs = differences.get type, tracker_is, tracker_was
+deltatracker = DeltaTracker.new
+diffs = deltatracker.get type, tracker_is, tracker_was
 
-model = DifferencesModel.new(diffs)
+model = DeltasModel.new(diffs)
 templatecontent = File.read(templatepath)
 template = ERB.new(templatecontent)
 
