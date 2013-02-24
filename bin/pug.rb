@@ -5,7 +5,10 @@ require "tracker"
 require "configuration"
 require "commands/commandcontext"
 # include all commands
-Dir[File.dirname(__FILE__) + "/commands/*.rb"].each {|file| require file }
+require "commands/initcommand"
+require "commands/addcommand"
+require "commands/helpcommand"
+require "commands/diffcommand"
 
 onprompt = lambda do |text|
 	puts text
