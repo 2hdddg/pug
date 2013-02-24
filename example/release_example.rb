@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-
+require "pug"
 require "date"
 require "tempfile"
 require "open3"

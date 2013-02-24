@@ -1,7 +1,7 @@
 require "test/unit"
 require "fileutils"
 
-$:.unshift(File.expand_path('../../', __FILE__))
+#$:.unshift(File.expand_path('../../', __FILE__))
 require 'tracker'
 
 class TestTracker < Test::Unit::TestCase

@@ -1,6 +1,6 @@
 require 'test/unit'
 
-$:.unshift(File.expand_path('../../', __FILE__))
+#$:.unshift(File.expand_path('../../', __FILE__))
 require 'parse'
 
 class TestParse < Test::Unit::TestCase

@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
-
+require "pug"
 require "erb"
 
-$:.unshift(File.dirname(__FILE__))
+#$:.unshift(File.dirname(__FILE__))
 
 require "tracker"
 require "deltatracker"
