@@ -29,3 +29,16 @@ Do not change the filename since that is used to track the file later on...
 
 > pug.rb diff Bug pugs_previous_release
 (shows a report on what has happened to issues between two imaginary releases..)
+
+To get a html version of the diff, use pugdiff:
+> pugdiff.rb Bug pugs_new_release pugs_previous_release templates/diff_html_standard.erb
+
+To get an idea of what this will look in a real-world scenario when pushing releases to production
+and automatically generating a release report for each release, checkout the code in release_example.rb,
+or run it:
+
+> ruby ./release_example.rb
+
+This will use pugs from ./pugs_new_release as the state of issues for the release being deployed and compare
+this to the state of issues of the currently deployed pugs in ./pugs_previous_release and generate an html report
+in the ./release_reports directory. Pugs from previous release will be replaced with pugs from the new release.
