@@ -114,7 +114,8 @@ class TestTracker < Test::Unit::TestCase
 		tracked = tracker.add('Bug', 'Reported', 'First')
 		tracked = tracker.add('Bug', 'Reported', 'Second')
 
-		found = tracker.all('Bug')
+		found = []
+		tracker.all('Bug') {|b| found.push(b)}
 
 		assert_equal 2, found.count
 	end
@@ -122,7 +123,8 @@ class TestTracker < Test::Unit::TestCase
 	def test_all_returns_empty_array_when_directory_for_type_does_not_exist
 		tracker = Tracker.new(path_to_test_directory)
 
-		found = tracker.all('Bug')
+		found = []
+		tracker.all('Bug') {|b| found.push(b)}
 
 		assert_equal 0, found.length
 	end

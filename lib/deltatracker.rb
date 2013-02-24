@@ -18,8 +18,7 @@ end
 class DeltaTracker
 	def get(type, tracker_is, tracker_was)
 		deltas = []
-		all = tracker_is.all type
-		all.each{|is|
+		all = tracker_is.all(type) {|is|
 			delta = Delta.new
 			delta.is = is
 			delta.was = tracker_was.find(type, is.filename)

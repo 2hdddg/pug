@@ -69,29 +69,27 @@ class Tracker
 
 	def all(type)
 		rootpath = File.join(@root, type)
-		return [] if !File.directory?rootpath
-
-		found = []
-		Find.find(rootpath) do |path|
-			if FileTest.directory?(path)
-				if File.basename(path)[0] == '.'
-					Find.prune
+		if File.directory?rootpath
+			Find.find(rootpath) do |path|
+				if FileTest.directory?(path)
+					if File.basename(path)[0] == '.'
+						Find.prune
+					else
+						next
+					end
 				else
-					next
-				end
-			else
-				if File.file?(path)
-					# split into parts to extract status
-					parts = path.split(File::SEPARATOR).reverse
-					filename = parts.shift
-					status = parts.shift
-					found.push(get(type, status, filename))
-				else
-					next
+					if File.file?(path)
+						# split into parts to extract status
+						parts = path.split(File::SEPARATOR).reverse
+						filename = parts.shift
+						status = parts.shift
+						yield get(type, status, filename)
+					else
+						next
+					end
 				end
 			end
 		end
-		found
 	end
 
 	def find(type, filename)

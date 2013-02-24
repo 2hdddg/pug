@@ -21,7 +21,7 @@ class TestDeltaTracker < Test::Unit::TestCase
 		end
 
 		def all(type)
-			to_all
+			to_all.each {|x| yield x}
 		end
 	end
 
