@@ -1,10 +1,10 @@
 require 'test/unit'
 
-root = File.expand_path('../../', __FILE__)
-$:.unshift(root)
+#root = File.expand_path('../../', __FILE__)
+#$:.unshift(root)
 require 'meta'
 # include all commands
-Dir[root + "/commands/*.rb"].each {|file| require file }
+#Dir[root + "/commands/*.rb"].each {|file| require file }
 
 
 class TestMeta < Test::Unit::TestCase

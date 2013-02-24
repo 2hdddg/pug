@@ -1,6 +1,6 @@
 require "yaml"
 
-$:.unshift(File.dirname(__FILE__))
+#$:.unshift(File.dirname(__FILE__))
 
 class GlobalConfiguration
 	attr_accessor :pugspath

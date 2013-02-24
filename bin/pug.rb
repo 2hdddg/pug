@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
-
-$:.unshift(File.dirname(__FILE__))
+#$:.unshift(File.dirname(__FILE__))
+require "pug"
 require "tracker"
 require "configuration"
 require "commands/commandcontext"

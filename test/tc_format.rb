@@ -1,7 +1,7 @@
 require 'test/unit'
 require 'date'
 
-$:.unshift(File.expand_path('../../', __FILE__))
+#$:.unshift(File.expand_path('../../', __FILE__))
 require 'format'
 
 
