@@ -26,7 +26,8 @@ tracker_is = Tracker.new(pugspath_is)
 tracker_was = Tracker.new(pugspath_was)
 
 deltatracker = DeltaTracker.new
-diffs = deltatracker.get type, tracker_is, tracker_was
+diffs = []
+deltatracker.get(type, tracker_is, tracker_was){|d| diffs.push(d)}
 
 model = DeltasModel.new(diffs)
 templatecontent = File.read(templatepath)

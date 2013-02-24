@@ -36,7 +36,10 @@ class TestDeltaTracker < Test::Unit::TestCase
 		tracked_was.status = 'Reported'
 		tracker_was.to_find = tracked_was
 
-		diffs = deltatracker.get 'Bugs', tracker_is, tracker_was
+		diffs = []
+		deltatracker.get('Bugs', tracker_is, tracker_was) { |d|
+			diffs.push d
+		}
 		
 		assert_equal(1, diffs.count)
 		assert_equal('Closed', diffs[0].is.status)
@@ -54,7 +57,10 @@ class TestDeltaTracker < Test::Unit::TestCase
 		tracked_was.status = 'Reported'
 		tracker_was.to_find = tracked_was
 
-		diffs = deltatracker.get 'Bugs', tracker_is, tracker_was
+		diffs = []
+		deltatracker.get('Bugs', tracker_is, tracker_was) { |d|
+			diffs.push d
+		}
 		
 		assert_equal(0, diffs.count)
 	end
@@ -68,7 +74,10 @@ class TestDeltaTracker < Test::Unit::TestCase
 		tracker_was = FakeTracker.new
 		tracker_was.to_find = nil
 
-		diffs = deltatracker.get 'Bugs', tracker_is, tracker_was
+		diffs = []
+		deltatracker.get('Bugs', tracker_is, tracker_was) { |d|
+			diffs.push d
+		}
 		
 		assert_equal(1, diffs.count)
 		assert_equal(nil, diffs[0].was)
