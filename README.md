@@ -25,7 +25,13 @@ Pug creates a new file with the filename set to a safe namne from the title. The
 file will be created in pugs_new_release/Bug/Reported. The first line of the file
 contains the exact title. Feel free to edit the content of the title by changing 
 the text on the first line. Pug does not care about the rest of the file. 
-Do not change the filename since that is used to track the file later on...
+But do not change the filename since that is used to track the file later on...
+
+The Bug parameter tells pug what kind of issue to add, could be bug, feature or whatever. Pug will
+create a new directory if none exists.
+
+The Reported parameter tells pug the initial status / state of the issue. Pug will create a new directory
+if none exists.
 
 > pug.rb diff Bug pugs_previous_release
 (shows a report on what has happened to issues between two imaginary releases..)
