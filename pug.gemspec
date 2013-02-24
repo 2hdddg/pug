@@ -10,11 +10,11 @@ Gem::Specification.new do |spec|
   spec.name        = 'pug'
   spec.version     = '0.2.0' #
   spec.licenses    = []
-  spec.authors     = ["2hdddg"]
+  spec.authors     = ["2hdddg", "wallymathieu"]
   spec.email       = []
   spec.homepage    = "https://github.com/2hdddg/pug"
   spec.summary     = %q{Light-weight issue tracker}
-  spec.description = %q{Pug is a simple light-weight distributed issue tracker that handles what's released on a server.}
+  spec.description = %q{Pug is a simple light-weight distributed issue tracker, main purpose is to automatically create release reports.}
 
   spec.required_ruby_version     = '>= 1.9.3' 
 
