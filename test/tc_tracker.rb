@@ -74,7 +74,7 @@ class TestTracker < Test::Unit::TestCase
 		tracker = Tracker.new(path_to_test_directory)
 		tracked = tracker.add('Bug', 'Reported', 'The title')
 
-		found = tracker.find('Bug', tracked.filename)
+		found = tracker.find(tracked.filename)
 
 		assert_equal tracked.filepath, found.filepath
 	end
@@ -83,7 +83,7 @@ class TestTracker < Test::Unit::TestCase
 		tracker = Tracker.new(path_to_test_directory)
 		tracker.add('Bug', 'Closed', 'just to make sure dirs created')
 
-		found = tracker.find('Bug', 'not_found')
+		found = tracker.find('not_found')
 
 		assert_equal nil, found
 	end
@@ -94,7 +94,7 @@ class TestTracker < Test::Unit::TestCase
 		tracked = tracker.add('Bug', 'Reported', 'The title')
 		FileUtils.mv tracked.filepath, File.join(path_to_test_directory, 'Bug', 'Closed', tracked.filename)
 
-		found = tracker.find('Bug', tracked.filename)
+		found = tracker.find(tracked.filename)
 
 		assert_equal tracked.filename, found.filename
 		assert_equal tracked.type, found.type
@@ -104,7 +104,7 @@ class TestTracker < Test::Unit::TestCase
 	def test_find_should_return_nil_when_directory_for_type_does_not_exit
 		tracker = Tracker.new(path_to_test_directory)
 
-		found = tracker.find('Bug', 'something')
+		found = tracker.find('something')
 
 		assert_equal nil, found
 	end

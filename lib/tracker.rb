@@ -92,11 +92,10 @@ class Tracker
 		end
 	end
 
-	def find(type, filename)
-		rootpath = File.join(@root, type)
-		return nil if !File.directory?rootpath
+	def find(filename)
+		return nil if !File.directory?@root
 
-		Find.find(rootpath) do |path|
+		Find.find(@root) do |path|
 			if FileTest.directory?(path)
 				if File.basename(path)[0] == '.'
 					Find.prune
@@ -109,6 +108,7 @@ class Tracker
 					parts = path.split(File::SEPARATOR).reverse
 					parts.shift # pops filename
 					status = parts.shift
+					type = parts.shift
 					return get type, status, filename
 				else
 					next

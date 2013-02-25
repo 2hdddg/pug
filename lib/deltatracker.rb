@@ -20,14 +20,14 @@ class DeltaTracker
 		tracker_is.all() {|is|
 			delta = Delta.new
 			delta.is = is
-			delta.was = tracker_was.find(type, is.filename)
+			delta.was = tracker_was.find(is.filename)
 
 			yield delta if is.type == type && (delta.was == nil || delta.is.status != delta.was.status)
 		}
 		tracker_was.all() {|was|
 			delta = Delta.new
 			delta.was = was
-			delta.is = tracker_is.find(type, was.filename)
+			delta.is = tracker_is.find(was.filename)
 
 			yield delta if was.type == type && delta.is == nil
 		}

@@ -16,7 +16,7 @@ class TestDeltaTracker < Test::Unit::TestCase
 			@added = []
 		end
 
-		def find(type, filename)
+		def find(filename)
 			to_find
 		end
 
