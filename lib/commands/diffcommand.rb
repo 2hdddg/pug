@@ -18,7 +18,7 @@ module Commands
 		end
 
 		def help(commandcontext)
-			commandcontext.output 'Use pug diff <path to pugs to compare to>'
+			commandcontext.output 'Use pug diff <type> <path to pugs to compare to>'
 		end
 	end
 end

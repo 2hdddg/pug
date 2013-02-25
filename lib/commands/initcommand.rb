@@ -13,5 +13,10 @@ module Commands
 			globalconfiguration.pugspath = commandcontext.prompt "Enter full path to where pugs will be placed"
 			@configuration.set_globalconfiguration(globalconfiguration)
 		end
+
+			def help(commandcontext)
+			commandcontext.output 'Use pug init'
+			commandcontext.output 'Configures settings file'
+		end	
 	end
 end
