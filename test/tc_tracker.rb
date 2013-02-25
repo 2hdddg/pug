@@ -109,13 +109,13 @@ class TestTracker < Test::Unit::TestCase
 		assert_equal nil, found
 	end
 
-	def test_all_returns_all_of_specified_type
+	def test_all_returns_all
 		tracker = Tracker.new(path_to_test_directory)
 		tracked = tracker.add('Bug', 'Reported', 'First')
-		tracked = tracker.add('Bug', 'Reported', 'Second')
+		tracked = tracker.add('Feature', 'Reported', 'Second')
 
 		found = []
-		tracker.all('Bug') {|b| found.push(b)}
+		tracker.all {|b| found.push(b)}
 
 		assert_equal 2, found.count
 	end
@@ -124,7 +124,7 @@ class TestTracker < Test::Unit::TestCase
 		tracker = Tracker.new(path_to_test_directory)
 
 		found = []
-		tracker.all('Bug') {|b| found.push(b)}
+		tracker.all {|b| found.push(b)}
 
 		assert_equal 0, found.length
 	end

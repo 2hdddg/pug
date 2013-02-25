@@ -20,7 +20,7 @@ class TestDeltaTracker < Test::Unit::TestCase
 			to_find
 		end
 
-		def all(type)
+		def all()
 			to_all.each {|x| yield x}
 		end
 	end
@@ -30,6 +30,7 @@ class TestDeltaTracker < Test::Unit::TestCase
 		tracker_is = FakeTracker.new
 		tracked_is = Tracked.new()
 		tracked_is.status = 'Closed'
+		tracked_is.type = 'Bug'
 		tracker_is.to_all = [tracked_is] 
 		tracker_was = FakeTracker.new
 		tracked_was = Tracked.new()
@@ -38,7 +39,7 @@ class TestDeltaTracker < Test::Unit::TestCase
 		tracker_was.to_all = [] 
 
 		diffs = []
-		deltatracker.get('Bugs', tracker_is, tracker_was) { |d|
+		deltatracker.get('Bug', tracker_is, tracker_was) { |d|
 			diffs.push d
 		}
 		
@@ -52,6 +53,7 @@ class TestDeltaTracker < Test::Unit::TestCase
 		tracker_is = FakeTracker.new
 		tracked_is = Tracked.new()
 		tracked_is.status = 'Reported'
+		tracked_is.type = 'Bug'
 		tracker_is.to_all = [tracked_is] 
 		tracker_was = FakeTracker.new
 		tracked_was = Tracked.new()
@@ -60,7 +62,7 @@ class TestDeltaTracker < Test::Unit::TestCase
 		tracker_was.to_all = [] 
 
 		diffs = []
-		deltatracker.get('Bugs', tracker_is, tracker_was) { |d|
+		deltatracker.get('Bug', tracker_is, tracker_was) { |d|
 			diffs.push d
 		}
 		
@@ -72,13 +74,14 @@ class TestDeltaTracker < Test::Unit::TestCase
 		tracker_is = FakeTracker.new
 		tracked_is = Tracked.new()
 		tracked_is.status = 'Reported'
+		tracked_is.type = 'Bug'
 		tracker_is.to_all = [tracked_is] 
 		tracker_was = FakeTracker.new
 		tracker_was.to_find = nil
 		tracker_was.to_all = [] 
 
 		diffs = []
-		deltatracker.get('Bugs', tracker_is, tracker_was) { |d|
+		deltatracker.get('Bug', tracker_is, tracker_was) { |d|
 			diffs.push d
 		}
 		
@@ -91,13 +94,14 @@ class TestDeltaTracker < Test::Unit::TestCase
 		tracker_was = FakeTracker.new
 		tracked_was = Tracked.new()
 		tracked_was.status = 'Reported'
+		tracked_was.type = 'Bug'
 		tracker_was.to_all = [tracked_was] 
 		tracker_is = FakeTracker.new
 		tracker_is.to_find = nil
 		tracker_is.to_all = [] 
 
 		diffs = []
-		deltatracker.get('Bugs', tracker_is, tracker_was) { |d|
+		deltatracker.get('Bug', tracker_is, tracker_was) { |d|
 			diffs.push d
 		}
 		

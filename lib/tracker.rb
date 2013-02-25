@@ -67,10 +67,9 @@ class Tracker
 		tracked
 	end
 
-	def all(type)
-		rootpath = File.join(@root, type)
-		if File.directory?rootpath
-			Find.find(rootpath) do |path|
+	def all()
+		if File.directory?@root
+			Find.find(@root) do |path|
 				if FileTest.directory?(path)
 					if File.basename(path)[0] == '.'
 						Find.prune
@@ -81,9 +80,10 @@ class Tracker
 					if File.file?(path)
 						# split into parts to extract status
 						parts = path.split(File::SEPARATOR).reverse
-						filename = parts.shift
-						status = parts.shift
-						yield get(type, status, filename)
+						trackedfilename = parts.shift
+						trackedstatus = parts.shift
+						trackedtype = parts.shift
+						yield get(trackedtype, trackedstatus, trackedfilename)
 					else
 						next
 					end

@@ -17,19 +17,19 @@ end
 
 class DeltaTracker
 	def get(type, tracker_is, tracker_was)
-		tracker_is.all(type) {|is|
+		tracker_is.all() {|is|
 			delta = Delta.new
 			delta.is = is
 			delta.was = tracker_was.find(type, is.filename)
 
-			yield delta if delta.was == nil || delta.is.status != delta.was.status
+			yield delta if is.type == type && (delta.was == nil || delta.is.status != delta.was.status)
 		}
-		tracker_was.all(type) {|was|
+		tracker_was.all() {|was|
 			delta = Delta.new
 			delta.was = was
 			delta.is = tracker_is.find(type, was.filename)
 
-			yield delta if delta.is == nil
+			yield delta if was.type == type && delta.is == nil
 		}
 	end
 end
