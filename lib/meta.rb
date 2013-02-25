@@ -1,6 +1,4 @@
 
-#$:.unshift(File.dirname(__FILE__))
-
 module Meta
 
 	def Meta.command_from_name(commandname, tracker)
