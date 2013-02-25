@@ -9,6 +9,7 @@ require "commands/initcommand"
 require "commands/addcommand"
 require "commands/helpcommand"
 require "commands/diffcommand"
+require "commands/listcommand"
 
 onprompt = lambda do |text|
 	puts text

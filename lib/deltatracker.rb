@@ -10,8 +10,8 @@ class Delta
 		else
 			diff = "#{was.status} => #{is.status}"
 		end
-		"#{is.title}\n" +
-		" #{diff}"
+		"-#{is.title}\n" +
+		"  #{diff}"
 	end
 end
 

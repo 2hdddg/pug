@@ -1,11 +1,16 @@
 require "date"
 require "find"
 
-#$:.unshift(File.dirname(__FILE__))
 require "format"
 
 class Tracked
 	attr_accessor :filepath, :type, :status, :title, :filename
+
+	def to_s
+		"-#{title}\n" +
+		"  #{type}:#{status}\n" +
+		"  #{filepath}"
+	end
 end
 
 class Tracker
