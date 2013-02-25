@@ -48,6 +48,29 @@ class TestDeltaTracker < Test::Unit::TestCase
 		assert_equal('Reported', diffs[0].was.status)
 	end
 
+	def test_type_should_not_be_case_sensitive
+		deltatracker = DeltaTracker.new()
+		tracker_is = FakeTracker.new
+		tracked_is = Tracked.new()
+		tracked_is.status = 'Closed'
+		tracked_is.type = 'Bug'
+		tracker_is.to_all = [tracked_is] 
+		tracker_was = FakeTracker.new
+		tracked_was = Tracked.new()
+		tracked_was.status = 'Reported'
+		tracker_was.to_find = tracked_was
+		tracker_was.to_all = [] 
+
+		diffs = []
+		deltatracker.get('bug', tracker_is, tracker_was) { |d|
+			diffs.push d
+		}
+		
+		assert_equal(1, diffs.count)
+		assert_equal('Closed', diffs[0].is.status)
+		assert_equal('Reported', diffs[0].was.status)
+	end
+
 	def test_should_not_report_when_status_is_same
 		deltatracker = DeltaTracker.new()
 		tracker_is = FakeTracker.new
