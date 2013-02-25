@@ -2,12 +2,14 @@
 lib = File.expand_path('../lib/', __FILE__)
 $:.unshift lib unless $:.include?(lib)
 
+require "pugversion"
+
 # building: gem build .\pug.gemspec
 # gem install .\pug-1.gem
 
 Gem::Specification.new do |spec|
   spec.name        = 'pug'
-  spec.version     = '0.2.0' #
+  spec.version     = Pug::VERSION
   spec.licenses    = []
   spec.authors     = ["2hdddg", "wallymathieu"]
   spec.email       = []
