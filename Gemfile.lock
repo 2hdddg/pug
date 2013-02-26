@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pug (0.2.0)
+    pug (0.2.1)
 
 GEM
   remote: http://rubygems.org/

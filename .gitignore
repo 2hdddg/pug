@@ -1,4 +1,4 @@
 # temp 
 .pug_global
 *.swp
-pug-0.2.0.gem
+pug-*.gem

@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.summary     = %q{Light-weight issue tracker}
   spec.description = %q{Pug is a simple light-weight distributed issue tracker, main purpose is to automatically create release reports.}
 
-  spec.required_ruby_version     = '>= 1.9.3' 
+  spec.required_ruby_version     = '>= 1.9.2' 
 
   spec.files       = Dir.glob('lib/**/*.rb') + Dir.glob('bin\\*.rb')
   spec.executables   = %w(pug.rb pugdiff.rb)
