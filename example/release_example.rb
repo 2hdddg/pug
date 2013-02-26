@@ -10,7 +10,7 @@ def generate_release_identifier
 	"%04d%02d%02d_%02d.%02d.%02d" % [now.year, now.month, now.day, now.hour, now.minute, now.second]
 end
 
-pugspath_is = "./pugs_new_release"
+pugspath_is = "./pugs"
 pugspath_was = "./pugs_previous_release"
 
 release_id = generate_release_identifier
@@ -31,7 +31,7 @@ reportfile = File.open(reportfile_path, "w")
 reportfile.write report
 reportfile.close
 
-
+# Replace previous pugs with new ones
 #FileUtils.rm_rf pugspath_was
 #FileUtils.mv pugspath_is, pugspath_was
 
