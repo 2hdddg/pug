@@ -24,7 +24,7 @@ end
 commandcontext = Commands::CommandContext.new(ARGV, onerror, onoutput, onprompt, onexit)
 commandname = commandcontext.pop_command!("Missing command, try help ;-)")
 
-if commandname == 'help' || commandname == nil
+if commandname == 'help'
 	command = Meta::command_from_name('help', nil)
 	command.run commandcontext 
 	exit(0)
