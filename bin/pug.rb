@@ -24,11 +24,18 @@ end
 commandcontext = Commands::CommandContext.new(ARGV, onerror, onoutput, onprompt, onexit)
 commandname = commandcontext.pop_command!("Missing command, try help ;-)")
 
-if commandname == nil
-	commandname = 'help'
+if commandname == 'help' || commandname == nil
+	command = Meta::command_from_name('help', nil)
+	command.run commandcontext 
+	exit(0)
 end
 
-pugspath = File.join('.', 'pugs')
+if commandcontext.options.has_key?'pugs'
+	pugspath = commandcontext.options['pugs']
+else
+	pugspath = File.join('.', 'pugs')
+end
+
 tracker = Tracker.new(pugspath)
 
 command = Meta::command_from_name(commandname, tracker)
