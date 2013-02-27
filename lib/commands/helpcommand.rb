@@ -9,10 +9,10 @@ module Commands
 		end
 
 		def run(commandcontext)
-			if commandcontext.number_of_arguments == 0
+			if commandcontext.number_of_commands == 0
 				help(commandcontext)
 			else
-				commandname = commandcontext.pop_argument!("")
+				commandname = commandcontext.pop_command!("")
 				command = Meta::command_from_name(commandname, @tracker)
 				if command != nil
 					command.help(commandcontext)

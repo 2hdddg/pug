@@ -22,7 +22,7 @@ onexit = lambda do |x|
 end
 
 commandcontext = Commands::CommandContext.new(ARGV, onerror, onoutput, onprompt, onexit)
-commandname = commandcontext.pop_argument!("Missing command, try help ;-)")
+commandname = commandcontext.pop_command!("Missing command, try help ;-)")
 
 if commandname == nil
 	commandname = 'help'

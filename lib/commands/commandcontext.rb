@@ -4,28 +4,32 @@ require "commands/headlesscommandcontext"
 
 module Commands
 	class CommandContext
-		attr_accessor :output_lambda, :prompt_lambda, :now_lambda
+		attr_accessor :options, :commands
 
 		def initialize(arguments, onerror, onoutput, onprompt, onexit)
-			@arguments = arguments
-			@headless = (@arguments.any? { |arg| arg == '--headless' })
+			@commands = arguments.select { |a| !a.start_with?'-' }
+			@options = Hash[arguments
+				.select { |a| a.start_with?'-' }
+				.map {|o| 
+					parsed = Parse::option_to_name_and_value(o) 
+					[parsed[:name], parsed[:value]]
+				}]
 			@onerror = onerror
 			@onexit = onexit
 			@onoutput = onoutput
 			@onprompt = onprompt
-			@now_lambda = lambda {|| DateTime.now }
 		end
 
-		def pop_argument!(text_when_missing = nil)
-			if number_of_arguments == 0
+		def pop_command!(text_when_missing = nil)
+			if @commands.length == 0
 				@onerror.call(text_when_missing)
 				@onexit.call(1)
 			end
-			@arguments.shift
+			@commands.shift
 		end
 
-		def number_of_arguments
-			@arguments.length
+		def number_of_commands
+			@commands.length
 		end
 
 		def output(s)
@@ -48,7 +52,7 @@ module Commands
 		#end
 
 		def get_now
-			@now_lambda.call
+			DateTime.now
 		end
 
 

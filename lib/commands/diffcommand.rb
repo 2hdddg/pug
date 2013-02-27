@@ -11,8 +11,8 @@ module Commands
 		end
 
 		def run(commandcontext)
-			type = commandcontext.pop_argument! 'Missing type'
-			pugspath_was = commandcontext.pop_argument! 'Missing path to pugs'
+			type = commandcontext.pop_command! 'Missing type'
+			pugspath_was = commandcontext.pop_command! 'Missing path to pugs'
 			tracker_was = Tracker.new(pugspath_was)
 			DeltaTracker.new().get(type, @tracker_is, tracker_was){|d| commandcontext.output(d) }
 		end

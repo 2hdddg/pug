@@ -10,8 +10,8 @@ module Commands
 		end
 
 		def run(commandcontext)
-			type = commandcontext.pop_argument! 'Missing type'
-			status = commandcontext.pop_argument! 'Missing status'
+			type = commandcontext.pop_command! 'Missing type'
+			status = commandcontext.pop_command! 'Missing status'
 
 			title = commandcontext.prompt "Enter a title"
 
