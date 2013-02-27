@@ -31,7 +31,7 @@ if none exists.
 > pug.rb diff Bug pugs_previous_release
 (shows a report on what has happened to issues between two imaginary releases..)
 
-> pug.rb list Bug Reported
+> pug.rb list type=Bug status=Reported
 (shows a list of all open bugs)
 
 To get a html version of the diff, use pugdiff:
