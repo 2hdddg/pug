@@ -1,4 +1,5 @@
 require 'bundler'
+require 'bundler/gem_tasks'
 Bundler.setup
 $:.unshift File.expand_path("../pug", __FILE__)
 require 'pug'
