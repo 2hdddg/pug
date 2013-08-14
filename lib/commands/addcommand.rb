@@ -15,7 +15,8 @@ module Commands
 
 			title = commandcontext.prompt "Enter a title"
 
-			@tracker.add(type, status, title)
+			tracked = @tracker.add(type, status, title)
+			commandcontext.start_editor tracked.filepath
 		end
 
 		def help(commandcontext)

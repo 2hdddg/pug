@@ -1,5 +1,5 @@
 require 'test/unit'
-
+require 'tracker'
 require 'commands/commandcontext'
 require 'commands/addcommand'
 
@@ -25,7 +25,14 @@ class TestAddCommand < Test::Unit::TestCase
 		end
 
 		def add(type, status, title)
-			@added.push({:type => type, :status => status, :title => title})
+			tracked = Tracked.new()
+			tracked.type = type
+			tracked.status = status
+			tracked.title = title
+			tracked.filepath = 'the path'
+			tracked.filename = 'filename'
+			@added.push tracked
+			tracked
 		end
 	end
 
@@ -33,7 +40,7 @@ class TestAddCommand < Test::Unit::TestCase
 		command = Commands::AddCommand.new(@tracker)
 		commandcontext = Commands::CommandContext.new([], @onerror, nil, @onprompt, @onexit)
 
-		command.run 	commandcontext
+		command.run commandcontext
 
 		assert_equal(true, @errors.count == 2)
 	end
@@ -54,8 +61,23 @@ class TestAddCommand < Test::Unit::TestCase
 		command.run commandcontext
 
 		added = @tracker.added[0]
-		assert_equal 'Bug', added[:type]
-		assert_equal 'Open', added[:status]
-		assert_equal 'A title', added[:title]
+		assert_equal 'Bug', added.type
+		assert_equal 'Open', added.status
+		assert_equal 'A title', added.title
+	end
+
+	def test_should_try_to_start_editor_with_added_file
+		command = Commands::AddCommand.new(@tracker)
+
+		called_with_file = nil
+		onedit = lambda do |f|
+			called_with_file = f
+		end
+
+		commandcontext = Commands::CommandContext.new(['Bug', 'Open'], @onerror, nil, @onprompt, @onexit, onedit)
+
+		command.run commandcontext
+
+		assert_equal('the path', called_with_file)
 	end
 end

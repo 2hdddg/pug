@@ -20,8 +20,14 @@ end
 onexit = lambda do |x|
 	exit(x)
 end
+onedit = lambda do |f|
+	editor = Editor.new
+	if editor.is_configured
+		editor.start f
+	end
+end
 
-commandcontext = Commands::CommandContext.new(ARGV, onerror, onoutput, onprompt, onexit)
+commandcontext = Commands::CommandContext.new(ARGV, onerror, onoutput, onprompt, onexit, onedit)
 commandname = commandcontext.pop_command!("Missing command, try help ;-)")
 
 if commandname == 'help'

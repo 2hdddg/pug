@@ -6,7 +6,7 @@ module Commands
 	class CommandContext
 		attr_accessor :options, :commands
 
-		def initialize(arguments, onerror, onoutput, onprompt, onexit)
+		def initialize(arguments, onerror, onoutput, onprompt, onexit, onedit = nil)
 			@commands = arguments.select { |a| !a.start_with?'-' }
 			@options = Hash[arguments
 				.select { |a| a.start_with?'-' }
@@ -18,6 +18,7 @@ module Commands
 			@onexit = onexit
 			@onoutput = onoutput
 			@onprompt = onprompt
+			@onedit = onedit
 		end
 
 		def pop_command!(text_when_missing = nil)
@@ -47,14 +48,12 @@ module Commands
 			@onprompt.call(text)
 		end
 
-		#def prompt_as_lambda
-		#	lambda {|field, text, defaultvalue| prompt field, text, defaultvalue }
-		#end
-
 		def get_now
 			DateTime.now
 		end
 
-
+		def start_editor(filepath)			
+			@onedit.call(filepath) if @onedit != nil
+		end
 	end
 end
