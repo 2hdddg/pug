@@ -19,3 +19,5 @@ end
 task :install => :build do
 	system "sudo gem install pug-#{Pug::VERSION}.gem"
 end
+
+task :default => :test
