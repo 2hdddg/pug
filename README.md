@@ -11,9 +11,10 @@ How?
 ----
 
 Add a bug:
-> cd example
-> pug.rb add Bug Reported
-(enter title of the bug)
+
+    CMD> cd example
+    CMD> pug.rb add Bug Reported
+    (enter title of the bug)
 
 Pug creates a new file with the filename set to a safe namne from the title. The 
 file will be created in pugs/Bug/Reported. The first line of the file
@@ -28,20 +29,21 @@ create a new directory if none exists.
 The Reported parameter tells pug the initial status/state of the issue. Pug will create a new directory
 if none exists.
 
-> pug.rb diff Bug pugs_previous_release
+    CMD> pug.rb diff Bug pugs_previous_release
 (shows a report on what has happened to issues between two imaginary releases..)
 
-> pug.rb list type=Bug status=Reported
+    CMD> pug.rb list type=Bug status=Reported
 (shows a list of all open bugs)
 
 To get a html version of the diff, use pugdiff:
-> pugdiff.rb Bug pugs_new_release pugs_previous_release templates/diff_html_standard.erb
+
+    CMD> pugdiff.rb Bug pugs_new_release pugs_previous_release templates/diff_html_standard.erb
 
 To get an idea of what this will look in a real-world scenario when pushing releases to production
 and automatically generating a release report for each release, checkout the code in release_example.rb,
 or run it:
 
-> ruby ./release_example.rb
+    CMD> ruby ./release_example.rb
 
 This will use pugs from ./pugs_new_release as the state of issues for the release being deployed and compare
 this to the state of issues of the currently deployed pugs in ./pugs_previous_release and generate an html report
