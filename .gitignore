@@ -2,3 +2,4 @@
 .pug_global
 *.swp
 pug-*.gem
+.bundle
