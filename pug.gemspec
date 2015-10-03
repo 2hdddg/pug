@@ -20,6 +20,6 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 1.9.2' 
 
   spec.files         = Dir.glob('lib/**/*.rb') + Dir.glob('bin\\*.rb')
-  spec.executables   = ["pug.rb", "pugdiff.rb"]
+  spec.executables   = ["pug", "pugdiff"]
   spec.require_paths = ["lib"]
 end
